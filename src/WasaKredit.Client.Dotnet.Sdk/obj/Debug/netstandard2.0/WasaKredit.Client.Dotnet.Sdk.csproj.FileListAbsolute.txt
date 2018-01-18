@@ -1,0 +1,8 @@
+/Users/LusFFS/Developer/Source/client-dotnet-sdk/src/WasaKredit.Client.Dotnet.Sdk/bin/Debug/netstandard2.0/WasaKredit.Client.Dotnet.Sdk.deps.json
+/Users/LusFFS/Developer/Source/client-dotnet-sdk/src/WasaKredit.Client.Dotnet.Sdk/bin/Debug/netstandard2.0/WasaKredit.Client.Dotnet.Sdk.dll
+/Users/LusFFS/Developer/Source/client-dotnet-sdk/src/WasaKredit.Client.Dotnet.Sdk/bin/Debug/netstandard2.0/WasaKredit.Client.Dotnet.Sdk.pdb
+/Users/LusFFS/Developer/Source/client-dotnet-sdk/src/WasaKredit.Client.Dotnet.Sdk/obj/Debug/netstandard2.0/WasaKredit.Client.Dotnet.Sdk.csproj.CoreCompileInputs.cache
+/Users/LusFFS/Developer/Source/client-dotnet-sdk/src/WasaKredit.Client.Dotnet.Sdk/obj/Debug/netstandard2.0/WasaKredit.Client.Dotnet.Sdk.AssemblyInfoInputs.cache
+/Users/LusFFS/Developer/Source/client-dotnet-sdk/src/WasaKredit.Client.Dotnet.Sdk/obj/Debug/netstandard2.0/WasaKredit.Client.Dotnet.Sdk.AssemblyInfo.cs
+/Users/LusFFS/Developer/Source/client-dotnet-sdk/src/WasaKredit.Client.Dotnet.Sdk/obj/Debug/netstandard2.0/WasaKredit.Client.Dotnet.Sdk.dll
+/Users/LusFFS/Developer/Source/client-dotnet-sdk/src/WasaKredit.Client.Dotnet.Sdk/obj/Debug/netstandard2.0/WasaKredit.Client.Dotnet.Sdk.pdb

@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\WasaKredit.Client.Dotnet.Sdk\WasaKredit.Client.Dotnet.Sdk.csproj" />
+  </ItemGroup>
+
+</Project>

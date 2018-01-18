@@ -1,0 +1,10 @@
+/Users/LusFFS/Developer/Source/client-dotnet-sdk/SamplesHelperClasses/bin/Debug/netstandard2.0/SamplesHelperClasses.deps.json
+/Users/LusFFS/Developer/Source/client-dotnet-sdk/SamplesHelperClasses/bin/Debug/netstandard2.0/SamplesHelperClasses.dll
+/Users/LusFFS/Developer/Source/client-dotnet-sdk/SamplesHelperClasses/bin/Debug/netstandard2.0/SamplesHelperClasses.pdb
+/Users/LusFFS/Developer/Source/client-dotnet-sdk/SamplesHelperClasses/bin/Debug/netstandard2.0/WasaKredit.Client.Dotnet.Sdk.dll
+/Users/LusFFS/Developer/Source/client-dotnet-sdk/SamplesHelperClasses/bin/Debug/netstandard2.0/WasaKredit.Client.Dotnet.Sdk.pdb
+/Users/LusFFS/Developer/Source/client-dotnet-sdk/SamplesHelperClasses/obj/Debug/netstandard2.0/SamplesHelperClasses.csproj.CoreCompileInputs.cache
+/Users/LusFFS/Developer/Source/client-dotnet-sdk/SamplesHelperClasses/obj/Debug/netstandard2.0/SamplesHelperClasses.AssemblyInfoInputs.cache
+/Users/LusFFS/Developer/Source/client-dotnet-sdk/SamplesHelperClasses/obj/Debug/netstandard2.0/SamplesHelperClasses.AssemblyInfo.cs
+/Users/LusFFS/Developer/Source/client-dotnet-sdk/SamplesHelperClasses/obj/Debug/netstandard2.0/SamplesHelperClasses.dll
+/Users/LusFFS/Developer/Source/client-dotnet-sdk/SamplesHelperClasses/obj/Debug/netstandard2.0/SamplesHelperClasses.pdb
