@@ -409,7 +409,9 @@ The URL that you supply through the `PingUrl` property should be an endpoint tha
 
 You will receive an html snippet which you should embed in your web page, inside of which the Wasa Kredit Checkout widget will handle the payment flow.
 
-When you want to initialize the checkout, just call the global `window.wasaCheckout.init()`.
+### <a name="initialize_checkout">Initialize checkout</a>
+
+After creating a Wasa Kredit Checkout by calling the `CreateCheckout` method and embedding the resulting html snippet in your web page, as described above, the checkout html snippet needs to be explicitly initialized through a javascript call to the global `window.wasaCheckout.init()` function. The `init` method call will populate the \<div\> contained in the html snippet and link it to an internal iframe.
 
 ```javascript
 <script>
