@@ -59,7 +59,7 @@ Authentication is done in two steps.
 
 ```c#
 var authenticationClient = AuthenticationClient.Instance;
-_authenticationClient.SetClientCredentials("<your client id here>", "<your client secret here>");
+authenticationClient.SetClientCredentials("<your client id here>", "<your client secret here>");
 ```
 
 ### WasaKreditClient
@@ -71,7 +71,7 @@ The WasaKreditClient is the client used to access the SDK methods. The client is
 ```c#
 bool testMode = true;
 var wasaKreditClient = WasaKreditClient.Instance;
-wasaKreditClient.Initialize(_authenticationClient, testMode);
+wasaKreditClient.Initialize(authenticationClient, testMode);
 ```
 
 ## <a name="available_methods">Available Methods</a>
