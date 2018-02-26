@@ -2,12 +2,13 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+    <PackageId>WasaKredit.Checkout.SDK</PackageId>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>Wasa Kredit</Authors>
     <Company>Wasa Kredit</Company>
     <Copyright>Wasa Kredit</Copyright>
     <Description>dotnet SDK for Wasa Kredit Checkout</Description>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
   </PropertyGroup>
 
   <ItemGroup>
