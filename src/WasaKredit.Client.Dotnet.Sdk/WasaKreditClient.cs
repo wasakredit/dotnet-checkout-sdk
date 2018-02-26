@@ -366,7 +366,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
 
             var url = string.Concat(_checkoutGateWayApiUrl, $"/v1/orders/{orderId}/order-references");
 
-            var response = await _restClient.PostAsync<AddOrderReferenceRequest, AddOrderReferenceResponse>(url, System.Net.HttpStatusCode.Created, request, _authorizationToken.Token, "Bearer", cancellationToken);
+            var response = await _restClient.PostAsync<AddOrderReferenceRequest, AddOrderReferenceResponse>(url, System.Net.HttpStatusCode.OK, request, _authorizationToken.Token, "Bearer", cancellationToken);
 
             return response.Result;
         }
