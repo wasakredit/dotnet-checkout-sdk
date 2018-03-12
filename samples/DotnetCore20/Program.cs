@@ -18,9 +18,8 @@ namespace DotnetCore20
             _authenticationClient = AuthenticationClient.Instance;
             _authenticationClient.SetClientCredentials("#Client_Id#", "#Client_Secret#");
 
-            CalculateLeasingCostExample();
-            CalculateTotalLeasingCostExample();
-            ValidateLeasingAmountExample();
+            CalculateMonthlyCostExample();
+            ValidateFinancedAmountExample();
             CreateProductWidgetExample();
             CreateCheckoutExample();
             GetOrderExample();
@@ -30,17 +29,17 @@ namespace DotnetCore20
         }
 
 
-        private static void CalculateLeasingCostExample()
+        private static void CalculateMonthlyCostExample()
         {
             var client = WasaKreditClient.Instance;
             client.Initialize(_authenticationClient, true);
 
             try
             {
-                var response = client.CalculateLeasingCost(RequestMockFactory.CalculateLeasingCostRequest());
-                var firstItemLeasingCost = response.LeasingCosts.ToList()[0];
+                var response = client.CalculateMonthlyCost(RequestMockFactory.CalculateMonthlyCostRequest());
+                var firstItemMonthlyCost = response.MonthlyCosts.ToList()[0];
 
-                Console.WriteLine($"The monthly cost for product {firstItemLeasingCost.ProductId}: {firstItemLeasingCost.MonthlyCost.Amount} SEK.");
+                Console.WriteLine($"The monthly cost for product {firstItemMonthlyCost.ProductId}: {firstItemMonthlyCost.MonthlyCost.Amount} SEK.");
                 Console.ReadLine();
             }
             catch (WasaKreditApiException ex)
@@ -53,31 +52,7 @@ namespace DotnetCore20
             }
         }
 
-        private static void CalculateTotalLeasingCostExample()
-        {
-            var client = WasaKreditClient.Instance;
-            client.Initialize(_authenticationClient, true);
-
-            try
-            {
-                var response = client.CalculateTotalLeasingCost(RequestMockFactory.CalculateTotalLeasingCostRequest());
-                var defaultContractLength = response.ContractLengths
-                        .FirstOrDefault(x => x.ContractLength == response.DefaultContractLength);
-
-                Console.WriteLine($"The monthly cost for the default contract length of {defaultContractLength.ContractLength} months is {defaultContractLength.MonthlyCost.Amount} SEK.");
-                Console.ReadLine();
-            }
-            catch (WasaKreditApiException ex)
-            {
-                PrintException(ex);
-            }
-            catch (WasaKreditAuthenticationException ex)
-            {
-                PrintException(ex);
-            }
-        }
-
-        public static void ValidateLeasingAmountExample()
+        public static void ValidateFinancedAmountExample()
         {
             var client = WasaKreditClient.Instance;
             client.Initialize(_authenticationClient, true);
@@ -85,7 +60,7 @@ namespace DotnetCore20
             try
             {
                 string amount = "10000.00";
-                var response = client.ValidateLeasingAmount(amount);
+                var response = client.ValidateFinancedAmount(amount);
 
                 Console.WriteLine($"Validation result for the amount {amount} SEK is {response.ValidationResult}.");
                 Console.ReadLine();

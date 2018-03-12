@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using WasaKredit.Client.Dotnet.Sdk.Models;
+using WasaKredit.Client.Dotnet.Sdk.Models.Requests;
 using WasaKredit.Client.Dotnet.Sdk.Requests;
 
 namespace SamplesHelperClasses
 {
     public static class RequestMockFactory
     {
-        public static CalculateLeasingCostRequest CalculateLeasingCostRequest()
+        public static CalculateMonthlyCostRequest CalculateMonthlyCostRequest()
         {
-            return new CalculateLeasingCostRequest
+            return new CalculateMonthlyCostRequest
             {
                 Items = new List<Item>
                 {

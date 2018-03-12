@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using WasaKredit.Client.Dotnet.Sdk.Authentication;
 using WasaKredit.Client.Dotnet.Sdk.Models;
+using WasaKredit.Client.Dotnet.Sdk.Models.Requests;
 using WasaKredit.Client.Dotnet.Sdk.Models.Responses;
 using WasaKredit.Client.Dotnet.Sdk.Requests;
 using WasaKredit.Client.Dotnet.Sdk.Response;
@@ -55,6 +56,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
+        [Obsolete("CalculateLeasingCost is deprecated, use CalculateMonthlyCost instead")]
         public CalculateLeasingCostResponse CalculateLeasingCost(CalculateLeasingCostRequest request)
         {
             CheckInitialized();
@@ -74,6 +76,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [Obsolete("CalculateLeasingCostAsync is deprecated, use CalculateMonthlyCostAsync instead")]
         public async Task<CalculateLeasingCostResponse> CalculateLeasingCostAsync(CalculateLeasingCostRequest request, CancellationToken cancellationToken = default(CancellationToken))
         {
             CheckInitialized();
@@ -87,10 +90,48 @@ namespace WasaKredit.Client.Dotnet.Sdk
         }
 
         /// <summary>
+        /// Calculates the monthly cost for each product based on the default contract length which is preconfigured for you as a Wasa Kredit partner.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public CalculateMonthlyCostResponse CalculateMonthlyCost(CalculateMonthlyCostRequest request)
+        {
+            CheckInitialized();
+            Authorize();
+
+            var url = string.Concat(_checkoutGateWayApiUrl, "/v1/monthly-cost");
+
+            var response = _restClient
+                .Post<CalculateMonthlyCostRequest, CalculateMonthlyCostResponse>(url, System.Net.HttpStatusCode.OK, request, _authorizationToken.Token);
+
+            return response.Result;
+        }
+
+        /// <summary>
+        /// Asynchronously calculates the monthly cost for each product based on the default contract length which is preconfigured for you as a Wasa Kredit partner.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task<CalculateMonthlyCostResponse> CalculateMonthlyCostAsync(CalculateMonthlyCostRequest request, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            CheckInitialized();
+            await AuthorizeAsync();
+
+            var url = string.Concat(_checkoutGateWayApiUrl, "/v1/monthly-cost");
+
+            var response = await _restClient
+                .PostAsync<CalculateMonthlyCostRequest, CalculateMonthlyCostResponse>(url, System.Net.HttpStatusCode.OK, request, _authorizationToken.Token, "Bearer", cancellationToken);
+
+            return response.Result;
+        }
+
+        /// <summary>
         /// Calculates the total monthly leasing costs for a total amount. The monthly leasing cost will be provided for each of your available contract lengths as a partner to Wasa Kredit.
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
+        [Obsolete("CalculateTotalLeasingCost is deprecated, do not use.")]
         public CalculateTotalLeasingCostResponse CalculateTotalLeasingCost(CalculateTotalLeasingCostRequest request)
         {
             CheckInitialized();
@@ -110,6 +151,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [Obsolete("CalculateTotalLeasingCostAsync is deprecated, do not use.")]
         public async Task<CalculateTotalLeasingCostResponse> CalculateTotalLeasingCostAsync(CalculateTotalLeasingCostRequest request, CancellationToken cancellationToken = default(CancellationToken))
         {
             CheckInitialized();
@@ -127,6 +169,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
         /// </summary>
         /// <param name="amount"></param>
         /// <returns></returns>
+        [Obsolete("ValidateLeasingAmount is deprecated, use ValidateFinancedAmount instead.")]
         public ValidateLeasingAmountResponse ValidateLeasingAmount(string amount)
         {
             CheckInitialized();
@@ -145,6 +188,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
         /// <param name="amount"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [Obsolete("ValidateLeasingAmountAsync is deprecated, use ValidateFinancedAmountAsync instead.")]
         public async Task<ValidateLeasingAmountResponse> ValidateLeasingAmountAsync(string amount, CancellationToken cancellationToken = default(CancellationToken))
         {
             CheckInitialized();
@@ -153,6 +197,42 @@ namespace WasaKredit.Client.Dotnet.Sdk
             var url = string.Concat(_checkoutGateWayApiUrl, "/v1/leasing/validate-amount?amount=", amount);
 
             var response = await _restClient.GetAsync<ValidateLeasingAmountResponse>(url, System.Net.HttpStatusCode.OK, _authorizationToken.Token, "Bearer", cancellationToken);
+
+            return response.Result;
+        }
+
+        /// <summary>
+        /// Validates whether an amount is within the min/max financing amount limits for you as a Wasa Kredit partner.
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+        public ValidateFinancedAmountResponse ValidateFinancedAmount(string amount)
+        {
+            CheckInitialized();
+            Authorize();
+
+            var url = string.Concat(_checkoutGateWayApiUrl, "/v1/leasing/validate-financed-amount/?amount=", amount);
+
+            var response = _restClient.Get<ValidateFinancedAmountResponse>(url, System.Net.HttpStatusCode.OK, _authorizationToken.Token, "Bearer");
+
+            return response.Result;
+        }
+
+        /// <summary>
+        /// Asynchronously validates whether an amount is within the min/max financing amount limits for you as a Wasa Kredit partner.
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [Obsolete("ValidateLeasingAmountAsync is deprecated, use ValidateFinancedAmountAsync instead.")]
+        public async Task<ValidateFinancedAmountResponse> ValidateFinancedAmountAsync(string amount, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            CheckInitialized();
+            await AuthorizeAsync();
+
+            var url = string.Concat(_checkoutGateWayApiUrl, "/v1/leasing/validate-financed-amount/?amount=", amount);
+
+            var response = await _restClient.GetAsync<ValidateFinancedAmountResponse>(url, System.Net.HttpStatusCode.OK, _authorizationToken.Token, "Bearer", cancellationToken);
 
             return response.Result;
         }
