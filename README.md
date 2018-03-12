@@ -145,7 +145,7 @@ var response = await wasaKreditClient.CalculateMonthlyCostAsync(request);
 
 ### <a name="validate_financed_amount">ValidateFinancedAmount</a>
 
-Validates that an amount is within the min/max financing amount for you as a Wasa Kredit partner. The primary purpose of this method is to validate whether the Wasa Kredit leasing payment option should be displayed for a given cart amount or not.
+Validates that an amount is within the min/max financing amount for you as a Wasa Kredit partner. The primary purpose of this method is to validate whether the Wasa Kredit monthly payment option should be displayed for a given cart amount or not.
 
 ```c#
 ValidateFinancedAmountResponse ValidateFinancedAmount(string amount)
@@ -173,7 +173,7 @@ var response = client.ValidateFinancedAmount("10000.00");
 
 ### <a name="create_product_widget">CreateProductWidget</a>
 
-To inform the customer about leasing as an available payment method, this method provides a Product Widget, in the form of a html snippet, that may be displayed close to the price information on the product details view on your e-commerce site.
+To inform the customer about Wasa Kredit financing as an available payment method, this method provides a Product Widget, in the form of a html snippet, that may be displayed close to the price information on the product details view on your e-commerce site.
 
 ```c#
 CreateProductWidgetResponse CreateProductWidget(CreateProductWidgetRequest request)
@@ -631,7 +631,7 @@ example
 ```c#
 try
 {
-    var response = client.CalculateLeasingCost(request);
+    var response = client.CalculateMonthlyCost(request);
 }
 catch (WasaKreditApiException ex) 
 {
