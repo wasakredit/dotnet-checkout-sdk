@@ -209,7 +209,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             CheckInitialized();
             Authorize();
 
-            var url = string.Concat(_checkoutGateWayApiUrl, "/v1/leasing/validate-financed-amount/?amount=", amount);
+            var url = string.Concat(_checkoutGateWayApiUrl, "/v1/validate-financed-amount/?amount=", amount);
 
             var response = _restClient.Get<ValidateFinancedAmountResponse>(url, System.Net.HttpStatusCode.OK, _authorizationToken.Token, "Bearer");
 
@@ -228,7 +228,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             CheckInitialized();
             await AuthorizeAsync();
 
-            var url = string.Concat(_checkoutGateWayApiUrl, "/v1/leasing/validate-financed-amount/?amount=", amount);
+            var url = string.Concat(_checkoutGateWayApiUrl, "/v1/validate-financed-amount/?amount=", amount);
 
             var response = await _restClient.GetAsync<ValidateFinancedAmountResponse>(url, System.Net.HttpStatusCode.OK, _authorizationToken.Token, "Bearer", cancellationToken);
 
