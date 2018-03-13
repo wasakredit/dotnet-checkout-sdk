@@ -1,4 +1,4 @@
-﻿namespace WasaKredit.Client.Dotnet.Sdk.Response
+﻿namespace WasaKredit.Client.Dotnet.Sdk.Responses
 {
     public class ValidateLeasingAmountResponse
     {

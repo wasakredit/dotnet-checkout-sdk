@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using WasaKredit.Client.Dotnet.Sdk.Models;
 
-namespace WasaKredit.Client.Dotnet.Sdk.Models.Responses
+namespace WasaKredit.Client.Dotnet.Sdk.Responses
 {
     public class CalculateMonthlyCostResponse
     {

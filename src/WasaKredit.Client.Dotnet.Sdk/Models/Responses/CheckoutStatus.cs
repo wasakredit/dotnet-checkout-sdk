@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WasaKredit.Client.Dotnet.Sdk.Response
+namespace WasaKredit.Client.Dotnet.Sdk.Responses
 {
     public class CheckoutStatus
     {

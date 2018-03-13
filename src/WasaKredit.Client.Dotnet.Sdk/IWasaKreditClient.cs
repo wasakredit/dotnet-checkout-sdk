@@ -1,9 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using WasaKredit.Client.Dotnet.Sdk.Models.Requests;
-using WasaKredit.Client.Dotnet.Sdk.Models.Responses;
 using WasaKredit.Client.Dotnet.Sdk.Requests;
-using WasaKredit.Client.Dotnet.Sdk.Response;
+using WasaKredit.Client.Dotnet.Sdk.Responses;
 
 namespace WasaKredit.Client.Dotnet.Sdk
 {

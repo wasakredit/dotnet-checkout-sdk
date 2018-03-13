@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using WasaKredit.Client.Dotnet.Sdk.Models;
-using WasaKredit.Client.Dotnet.Sdk.Models.Requests;
 using WasaKredit.Client.Dotnet.Sdk.Requests;
 
 namespace SamplesHelperClasses
