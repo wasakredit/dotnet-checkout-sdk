@@ -49,9 +49,9 @@ namespace WasaKredit.Client.Dotnet.Sdk.RestClient
         
         public WasaKreditResponse<TResponse> Get<TResponse>(string uri, HttpStatusCode expectedStatusCode, string authorizationToken = null, string authorizationMethod = "Bearer")
         {
-            var responseMessage = DoGetDelete(uri, HttpMethod.Get, authorizationToken, authorizationMethod);
+            var responseMessage = DoGetDelete(uri, HttpMethod.Get, authorizationToken, authorizationMethod).Result;
 
-            var response = GetWasaKreditResponse<TResponse>(expectedStatusCode, responseMessage);
+            var response = GetWasaKreditResponse<TResponse>(expectedStatusCode, responseMessage).Result;
 
             if (response.StatusCode == expectedStatusCode)
                 return response;
@@ -68,9 +68,9 @@ namespace WasaKredit.Client.Dotnet.Sdk.RestClient
 
         public WasaKreditResponse<TResponse> Delete<TResponse>(string uri, HttpStatusCode expectedStatusCode, string authorizationToken = null, string authorizationMethod = "Bearer")
         {
-            var responseMessage = DoGetDelete(uri, HttpMethod.Delete, authorizationToken, authorizationMethod);
+            var responseMessage = DoGetDelete(uri, HttpMethod.Delete, authorizationToken, authorizationMethod).Result;
 
-            var response = GetWasaKreditResponse<TResponse>(expectedStatusCode, responseMessage);
+            var response = GetWasaKreditResponse<TResponse>(expectedStatusCode, responseMessage).Result;
 
             if (response.StatusCode == expectedStatusCode)
                 return response;
@@ -92,9 +92,9 @@ namespace WasaKredit.Client.Dotnet.Sdk.RestClient
 
         public WasaKreditResponse<TResponse> Post<TRequest, TResponse>(string uri, HttpStatusCode expectedStatusCode, TRequest contract, string authorizationToken = null, string authorizationMethod = "Bearer")
         {
-            var responseMessage = DoPostPut(HttpMethod.Post, uri, contract, authorizationToken, authorizationMethod);
+            var responseMessage = DoPostPut(HttpMethod.Post, uri, contract, authorizationToken, authorizationMethod).Result;
 
-            var response = GetWasaKreditResponse<TResponse>(expectedStatusCode, responseMessage);
+            var response = GetWasaKreditResponse<TResponse>(expectedStatusCode, responseMessage).Result;
 
             if (response.StatusCode == expectedStatusCode)
                 return response;
@@ -118,9 +118,9 @@ namespace WasaKredit.Client.Dotnet.Sdk.RestClient
             string authorizationToken = null, string authorizationMethod = "Bearer",
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var responseMessage = DoPostPut(HttpMethod.Put, uri, contract, authorizationToken, authorizationMethod);
+            var responseMessage = DoPostPut(HttpMethod.Put, uri, contract, authorizationToken, authorizationMethod).Result;
 
-            var response = GetWasaKreditResponse<TResponse>(expectedStatusCode, responseMessage);
+            var response = GetWasaKreditResponse<TResponse>(expectedStatusCode, responseMessage).Result;
 
             if (response.StatusCode == expectedStatusCode)
                 return response;
@@ -137,9 +137,9 @@ namespace WasaKredit.Client.Dotnet.Sdk.RestClient
 
         public WasaKreditResponse<TResponse> PostUrlEncoded<TResponse>(string uri, HttpStatusCode expectedStatusCode, IEnumerable<KeyValuePair<string, string>> formUrlEncodedContent)
         {
-            var responseMessage = DoPostFormUrlEncoded(HttpMethod.Post, uri, formUrlEncodedContent);
+            var responseMessage = DoPostFormUrlEncoded(HttpMethod.Post, uri, formUrlEncodedContent).Result;
 
-            var response = GetWasaKreditResponse<TResponse>(expectedStatusCode, responseMessage);
+            var response = GetWasaKreditResponse<TResponse>(expectedStatusCode, responseMessage).Result;
 
             if (response.StatusCode == expectedStatusCode)
                 return response;
@@ -154,7 +154,7 @@ namespace WasaKredit.Client.Dotnet.Sdk.RestClient
             return await GetWasaKreditResponseAsync<TResponse>(expectedStatusCode, responseMessage);
         }
 
-        private HttpResponseMessage DoGetDelete(string uri, HttpMethod method, string authorizationToken, string authorizationMethod)
+        private async Task<HttpResponseMessage> DoGetDelete(string uri, HttpMethod method, string authorizationToken, string authorizationMethod)
         {
             if (method != HttpMethod.Get && method != HttpMethod.Delete)
             {
@@ -166,7 +166,7 @@ namespace WasaKredit.Client.Dotnet.Sdk.RestClient
             AddAuthorizationHeader(requestMessage, authorizationToken, authorizationMethod);
             AddTestModeHeader(requestMessage);
 
-            var responseMessage = _client.SendAsync(requestMessage).Result;
+            var responseMessage = await _client.SendAsync(requestMessage).ConfigureAwait(false);
 
             if (responseMessage.StatusCode == HttpStatusCode.RequestTimeout)
             {
@@ -198,7 +198,7 @@ namespace WasaKredit.Client.Dotnet.Sdk.RestClient
             return responseMessage;
         }
 
-        private HttpResponseMessage DoPostPut<T>(HttpMethod method, string uri, T item, string authorizationToken = null, string authorizationMethod = "Bearer")
+        private async Task<HttpResponseMessage> DoPostPut<T>(HttpMethod method, string uri, T item, string authorizationToken = null, string authorizationMethod = "Bearer")
         {
             if (method != HttpMethod.Post && method != HttpMethod.Put)
             {
@@ -213,7 +213,7 @@ namespace WasaKredit.Client.Dotnet.Sdk.RestClient
             AddAuthorizationHeader(requestMessage, authorizationToken, authorizationMethod);
             AddTestModeHeader(requestMessage);
 
-            var response = _client.SendAsync(requestMessage).Result;
+            var response = await _client.SendAsync(requestMessage).ConfigureAwait(false);
 
             if (response.StatusCode == HttpStatusCode.RequestTimeout)
             {
@@ -248,7 +248,7 @@ namespace WasaKredit.Client.Dotnet.Sdk.RestClient
             return response;
         }
 
-        private HttpResponseMessage DoPostFormUrlEncoded(HttpMethod method, string uri, IEnumerable<KeyValuePair<string, string>> formUrlEncodedContent)
+        private async Task<HttpResponseMessage> DoPostFormUrlEncoded(HttpMethod method, string uri, IEnumerable<KeyValuePair<string, string>> formUrlEncodedContent)
         {
             if (method != HttpMethod.Post && method != HttpMethod.Put)
             {
@@ -262,7 +262,7 @@ namespace WasaKredit.Client.Dotnet.Sdk.RestClient
 
             AddTestModeHeader(requestMessage);
 
-            var response = _client.SendAsync(requestMessage).Result;
+            var response = await _client.SendAsync(requestMessage).ConfigureAwait(false);
 
             if (response.StatusCode == HttpStatusCode.RequestTimeout)
             {
@@ -296,10 +296,10 @@ namespace WasaKredit.Client.Dotnet.Sdk.RestClient
             return response;
         }
 
-        private WasaKreditResponse<TResponse> GetWasaKreditResponse<TResponse>(HttpStatusCode expectedStatusCode, HttpResponseMessage responseMessage)
+        private async Task<WasaKreditResponse<TResponse>> GetWasaKreditResponse<TResponse>(HttpStatusCode expectedStatusCode, HttpResponseMessage responseMessage)
         {
             var resultString = responseMessage.Content != null
-                ? responseMessage.Content?.ReadAsStringAsync().Result
+                ? await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false)
                 : string.Empty;
 
             var locationHeaderValue = string.Empty;
