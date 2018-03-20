@@ -10,9 +10,8 @@
 * [Test Projects](#test_projects)
 * [Initialization](#initialization)
 * [Available Methods](#available_methods)
-  * [CalculateLeasingCost](#calculate_leasing_cost)
-  * [CalculateTotalLeasingCost](#calculate_total_leasing_cost)
-  * [ValidateLeasingAmount](#validate_leasing_amount)
+  * [CalculateMonthlyCost](#calculate_monthly_cost)
+  * [ValidateFinancedAmount](#validate_financed_amount)
   * [CreateProductWidget](#create_product_widget)
   * [CreateCheckout](#create_checkout)
   * [Handling custom checkout callbacks](#custom_callbacks)
@@ -76,17 +75,17 @@ wasaKreditClient.Initialize(authenticationClient, testMode);
 
 ## <a name="available_methods">Available Methods</a>
 
-### <a name="calculate_leasing_cost">CalculateLeasingCost</a>
+### <a name="calculate_monthly_cost">CalculateMonthlyCost</a>
 
-This method calculates the monthly leasing cost for each product based on the default contract length which is preconfigured for you as a Wasa Kredit partner. The most obvious usage for this method is to provide monthly leasing prices for each product in product list views on your e-commerce site.
+This method calculates the monthly cost for each product based on the default contract length which is preconfigured for you as a Wasa Kredit partner. The most obvious usage for this method is to provide monthly prices for each product in product list views on your e-commerce site.
 
 ```c#
-CalculateLeasingCostResponse CalculateLeasingCost(CalculateLeasingCostRequest request)
+CalculateMonthlyCostResponse CalculateMonthlyCost(CalculateMonthlyCostRequest request)
 ```
 
 #### Parameters
 
-##### CalculateLeasingCostRequest
+##### CalculateMonthlyCostRequest
 
 | Name | Type | Description |
 |---|---|---|
@@ -108,15 +107,14 @@ CalculateLeasingCostResponse CalculateLeasingCost(CalculateLeasingCostRequest re
 
 #### Response
 
-##### CalculateLeasingCostResponse
+##### CalculateMonthlyCostResponse
 
 | Name | Type | Description |
 |---|---|---|
-| LeasingCosts | *List[**LeasingCost**]* | A list containing leasing cost for each requested **Item** |
+| MonthlyCosts | *List[**MonthlyCost**]* | A list containing the monthly cost for each requested **Item** |
 | ProductId | *string* | Your unique product identifier |
-| Leasable | *bool* | Whether or not this item is leasable |
 
-##### LeasingCost
+##### MonthlyCost
 
 | Name | Type | Description |
 |---|---|---|
@@ -132,7 +130,7 @@ CalculateLeasingCostResponse CalculateLeasingCost(CalculateLeasingCostRequest re
 #### Example usage
 
 ```c#
-var request = new CalculateLeasingCostRequest
+var request = new CalculateMonthlyCostRequest
 {
     Items = new List<Item>
     {
@@ -141,85 +139,27 @@ var request = new CalculateLeasingCostRequest
     }
 };
 
-var response = await wasaKreditClient.CalculateLeasingCostAsync(request);
+var response = await wasaKreditClient.CalculateMonthlyCostAsync(request);
 
 ```
 
-### <a name="calculate_total_leasing_cost">CalculateTotalLeasingCost</a>
+### <a name="validate_financed_amount">ValidateFinancedAmount</a>
 
-Calculates the total monthly leasing costs for a total amount. The monthly leasing cost will be provided for each of your available contract lengths as a partner to Wasa Kredit.
-
-```c#
-CalculateTotalLeasingCostResponse CalculateTotalLeasingCost(CalculateTotalLeasingCostRequest request)
-```
-
-#### Parameters
-
-##### CalculateTotalLeasingCostRequest
-
-| Name | Type | Description |
-|---|---|---|
-| TotalAmount | *Price* (required) | The total leasing amount. |
-
-##### Price
-
-| Name | Type | Description |
-|---|---|---|
-| Amount | *string* (required) | The amount/price represented as a numeric string. The maximum length is 10 characters, including the decimal delimiter. Prices are supposed to be specified using up to 7 integer digits and two decimal digits. Specifying the decimal part is optional. The period character (‘.’) is used as the decimal delimiter.
-| Currency | *string* (required) | The currency represented as a ISO 4217 currency code. *At present, only SEK is handled*. |
-
-#### Response
-
-##### CalculateTotalLeasingCostResponse
-
-| Name | Type | Description |
-|---|---|---|
-| DefaultContractLength | *int* | ... |
-| ContractLengths | *List[**ContractLengthObject**]* | A list containing all the available contract lengths |
-
-##### ContractLengthObject
-
-| Name | Type | Description |
-|---|---|---|
-| ContractLength | *int* | The length of the contract in months |
-| MonthlyCost | *Price* | ...|
-
-##### Price
-
-| Name | Type | Description |
-|---|---|---|
-| Amount | *string* | The amount/price represented as a numeric string. The maximum length is 10 characters, including the decimal delimiter. Prices are supposed to be specified using up to 7 integer digits and two decimal digits. Specifying the decimal part is optional. The period character (‘.’) is used as the decimal delimiter.
-| Currency | *string* | The currency represented as a ISO 4217 currency code. *At present, only SEK is handled*. |
-
-#### Example usage
+Validates that an amount is within the min/max financing amount for you as a Wasa Kredit partner. The primary purpose of this method is to validate whether the Wasa Kredit monthly payment option should be displayed for a given cart amount or not.
 
 ```c#
-var request = new CalculateTotalLeasingCostRequest
-{
-    TotalAmount = new Price {Amount = "11500.50", Currency = "SEK"}
-};
-
-var response = await wasaKreditClient.CalculateLeasingCostAsync(request);
-
-```
-
-### <a name="validate_leasing_amount">ValidateLeasingAmount</a>
-
-Validates that an amount is within the min/max financing amount for you as a Wasa Kredit partner. The primary purpose of this method is to validate whether the Wasa Kredit leasing payment option should be displayed for a given cart amount or not.
-
-```c#
-ValidateLeasingAmountResponse ValidateLeasingAmount(string amount)
+ValidateFinancedAmountResponse ValidateFinancedAmount(string amount)
 ```
 
 #### Parameters
 
 | Name | Type | Description |
 |---|---|---|
-| Amount | *string* (required) | The total leasing amount. |
+| Amount | *string* (required) | The total financed amount. |
 
 #### Response
 
-##### ValidateLeasingAmountResponse
+##### ValidateFinancedAmountResponse
 
 | Name | Type | Description |
 |---|---|---|
@@ -228,12 +168,12 @@ ValidateLeasingAmountResponse ValidateLeasingAmount(string amount)
 #### Example usage
 
 ```c#
-var response = client.ValidateAllowedLeasingAmountAsync("10000.00");
+var response = client.ValidateFinancedAmount("10000.00");
 ```
 
 ### <a name="create_product_widget">CreateProductWidget</a>
 
-To inform the customer about leasing as an available payment method, this method provides a Product Widget, in the form of a html snippet, that may be displayed close to the price information on the product details view on your e-commerce site.
+To inform the customer about Wasa Kredit financing as an available payment method, this method provides a Product Widget, in the form of a html snippet, that may be displayed close to the price information on the product details view on your e-commerce site.
 
 ```c#
 CreateProductWidgetResponse CreateProductWidget(CreateProductWidgetRequest request)
@@ -691,7 +631,7 @@ example
 ```c#
 try
 {
-    var response = client.CalculateLeasingCost(request);
+    var response = client.CalculateMonthlyCost(request);
 }
 catch (WasaKreditApiException ex) 
 {

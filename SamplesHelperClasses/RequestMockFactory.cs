@@ -7,9 +7,9 @@ namespace SamplesHelperClasses
 {
     public static class RequestMockFactory
     {
-        public static CalculateLeasingCostRequest CalculateLeasingCostRequest()
+        public static CalculateMonthlyCostRequest CalculateMonthlyCostRequest()
         {
-            return new CalculateLeasingCostRequest
+            return new CalculateMonthlyCostRequest
             {
                 Items = new List<Item>
                 {

@@ -1,6 +1,6 @@
 ﻿namespace WasaKredit.Client.Dotnet.Sdk.Responses
 {
-    public class ValidateLeasingAmountResponse
+    public class ValidateFinancedAmountResponse
     {
         public bool ValidationResult { get; set; }
     }

@@ -1,4 +1,6 @@
-﻿namespace WasaKredit.Client.Dotnet.Sdk.Models.Responses
+﻿using WasaKredit.Client.Dotnet.Sdk.Models;
+
+namespace WasaKredit.Client.Dotnet.Sdk.Responses
 {
     public class GetOrderStatusResponse : OrderStatus
     {

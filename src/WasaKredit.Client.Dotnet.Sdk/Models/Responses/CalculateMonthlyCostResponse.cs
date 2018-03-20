@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using WasaKredit.Client.Dotnet.Sdk.Models;
 
-
 namespace WasaKredit.Client.Dotnet.Sdk.Responses
 {
-    public class CalculateLeasingCostResponse
+    public class CalculateMonthlyCostResponse
     {
-        public IEnumerable<LeasingCost> LeasingCosts { get; set; }
+        public IEnumerable<MonthlyCostItem> MonthlyCosts { get; set; }
     }
 }
