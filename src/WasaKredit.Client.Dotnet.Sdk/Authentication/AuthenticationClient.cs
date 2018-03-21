@@ -106,7 +106,7 @@ namespace WasaKredit.Client.Dotnet.Sdk.Authentication
                 throw new WasaKreditClientException("Error parsing expires_in value from authorize response");
             }
 
-             _accessToken = new AccessToken(response.AccessToken, DateTime.UtcNow.AddMinutes(expiresInSeconds));
+             _accessToken = new AccessToken(response.AccessToken, DateTime.UtcNow.AddSeconds(expiresInSeconds));
         }
 
         private IEnumerable<KeyValuePair<string, string>> CreateAuthenticationContent()
