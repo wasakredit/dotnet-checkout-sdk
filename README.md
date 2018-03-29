@@ -343,7 +343,7 @@ var request = new CreateCheckoutRequest
 var response = client.CreateCheckout(request);
 ```
 
-Note that the `OrderReferences` property is a collection. Even if you don't want to create an order in your system at before creating a Wasa Kredit checkout, you have the possibility to supply a temporary identifier to be able to match the Wasa Kredit order with some reference in your system. You also have the option to add additional reference identifiers at a later time, for example when your final order is created 
+Note that the `OrderReferences` property is a collection. Even if you don't want to create an order in your system at before creating a Wasa Kredit checkout, you have the possibility to supply a temporary identifier to be able to match the Wasa Kredit order with some reference in your system. You also have the option to add additional reference identifiers at a later time, for example when your final order is created
 
 The URL that you supply through the `PingUrl` property should be an endpoint that is set up to receive a POST message and return an http status code 200 response on success.
 
@@ -491,6 +491,7 @@ GetOrderStatusResponse GetOrderStatus(string orderId)
 ```
 
 #### Parameters
+
 | Name | Type | Description |
 |---|---|---|
 | OrderId | *string* (required) | The order identifier. |
@@ -633,7 +634,7 @@ try
 {
     var response = client.CalculateMonthlyCost(request);
 }
-catch (WasaKreditApiException ex) 
+catch (WasaKreditApiException ex)
 {
     Console.Write(WasaKreditClient.GetExceptionMessage(ex));
 }
@@ -642,4 +643,3 @@ catch (WasaKreditAuthenticationException ex)
     Console.Write(WasaKreditClient.GetExceptionMessage(ex));
 }
 ```
- 
