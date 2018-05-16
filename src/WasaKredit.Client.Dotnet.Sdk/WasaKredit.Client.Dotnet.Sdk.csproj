@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
-    <PackageId>WasaKredit.Checkout.SDK.Test</PackageId>
+    <PackageId>WasaKredit.Checkout.SDK</PackageId>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>Wasa Kredit</Authors>
     <Company>Wasa Kredit</Company>
