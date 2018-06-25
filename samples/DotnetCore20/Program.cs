@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
 using SamplesHelperClasses;
 using WasaKredit.Client.Dotnet.Sdk;
 using WasaKredit.Client.Dotnet.Sdk.Authentication;
@@ -19,6 +17,7 @@ namespace DotnetCore20
             _authenticationClient.SetClientCredentials("#Client_Id#", "#Client_Secret#");
 
             CalculateMonthlyCostExample();
+            GetPaymentMethodsExample();
             ValidateFinancedAmountExample();
             CreateProductWidgetExample();
             CreateCheckoutExample();
@@ -40,6 +39,29 @@ namespace DotnetCore20
                 var firstItemMonthlyCost = response.MonthlyCosts.ToList()[0];
 
                 Console.WriteLine($"The monthly cost for product {firstItemMonthlyCost.ProductId}: {firstItemMonthlyCost.MonthlyCost.Amount} SEK.");
+                Console.ReadLine();
+            }
+            catch (WasaKreditApiException ex)
+            {
+                PrintException(ex);
+            }
+            catch (WasaKreditAuthenticationException ex)
+            {
+                PrintException(ex);
+            }
+        }
+
+        private static void GetPaymentMethodsExample()
+        {
+            var client = WasaKreditClient.Instance;
+            client.Initialize(_authenticationClient, true);
+
+            try
+            {
+                var response = client.GetPaymentMethods(RequestMockFactory.GetPaymentMethodsRequest());
+                var firstPaymentMethod = response.PaymentMethods.ToList()[0];
+
+                Console.WriteLine($"Payment method is \"{firstPaymentMethod.DisplayName}\" with a default contract length of {firstPaymentMethod.Options.DefaultContractLength} months.");
                 Console.ReadLine();
             }
             catch (WasaKreditApiException ex)
