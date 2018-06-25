@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using WasaKredit.Client.Dotnet.Sdk.Models;
+using WasaKredit.Client.Dotnet.Sdk.Contracts;
+using WasaKredit.Client.Dotnet.Sdk.Contracts.GetPaymentMethods;
 using WasaKredit.Client.Dotnet.Sdk.Requests;
 
 namespace SamplesHelperClasses
@@ -17,6 +18,11 @@ namespace SamplesHelperClasses
                     new Item {ProductId = "23456", FinancedPrice = new Price {Amount = "17995.50", Currency = "SEK"}}
                 }
             };
+        }
+
+        public static GetPaymentMethodsRequest GetPaymentMethodsRequest()
+        {
+            return new GetPaymentMethodsRequest {TotalAmount = new CurrencyAmount {Amount = "20000", Currency = "SEK"}};
         }
 
         public static CalculateTotalLeasingCostRequest CalculateTotalLeasingCostRequest()
