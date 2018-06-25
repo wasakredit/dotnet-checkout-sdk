@@ -25,7 +25,10 @@ namespace WasaKredit.Client.Dotnet.Sdk
         private static bool _testMode;
         private static readonly string _checkoutGateWayApiUrl = "https://b2b.services.wasakredit.se";
 
+
+
         private static AccessToken _authorizationToken;
+        private static readonly string _currency = "SEK";
 
         /// <summary>
         /// Accesses the singleton instance of the Wasa Checkout API client.
@@ -166,14 +169,14 @@ namespace WasaKredit.Client.Dotnet.Sdk
         /// <summary>
         /// Calculates the cost for all available payment methods and contract lengths (if applicable) for you as a partner to Wasa Kredit.
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="totalAmount"></param>
         /// <returns></returns>
-        public GetPaymentMethodsResponse GetPaymentMethods(GetPaymentMethodsRequest request)
+        public GetPaymentMethodsResponse GetPaymentMethods(string totalAmount)
         {
             CheckInitialized();
             Authorize();
 
-            var url = $"{_checkoutGateWayApiUrl}/v1/payment-methods?total_amount={request.TotalAmount.Amount}&currency={request.TotalAmount.Currency}";
+            var url = $"{_checkoutGateWayApiUrl}/v1/payment-methods?total_amount={totalAmount}&currency={_currency}";
             var response = _restClient.Get<GetPaymentMethodsResponse>(url, System.Net.HttpStatusCode.OK, _authorizationToken.Token);
             return response.Result;
         }
@@ -181,15 +184,15 @@ namespace WasaKredit.Client.Dotnet.Sdk
         /// <summary>
         /// Asynchronously calculates the cost for all available payment methods and contract lengths (if applicable) for you as a partner to Wasa Kredit.
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="totalAmount"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<GetPaymentMethodsResponse> GetPaymentMethodsAsync(GetPaymentMethodsRequest request, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<GetPaymentMethodsResponse> GetPaymentMethodsAsync(string totalAmount, CancellationToken cancellationToken = default(CancellationToken))
         {
             CheckInitialized();
             Authorize();
 
-            var url = $"{_checkoutGateWayApiUrl}/v1/payment-methods?total_amount={request.TotalAmount.Amount}&currency={request.TotalAmount.Currency}";
+            var url = $"{_checkoutGateWayApiUrl}/v1/payment-methods?total_amount={totalAmount}&currency={_currency}";
             var response = await _restClient.GetAsync<GetPaymentMethodsResponse>(url, System.Net.HttpStatusCode.OK, _authorizationToken.Token, "Bearer", cancellationToken);
             return response.Result;
         }

@@ -20,11 +20,6 @@ namespace SamplesHelperClasses
             };
         }
 
-        public static GetPaymentMethodsRequest GetPaymentMethodsRequest()
-        {
-            return new GetPaymentMethodsRequest {TotalAmount = new CurrencyAmount {Amount = "20000", Currency = "SEK"}};
-        }
-
         public static CalculateTotalLeasingCostRequest CalculateTotalLeasingCostRequest()
         {
             return new CalculateTotalLeasingCostRequest
