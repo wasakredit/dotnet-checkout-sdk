@@ -11,6 +11,7 @@
 * [Initialization](#initialization)
 * [Available Methods](#available_methods)
   * [CalculateMonthlyCost](#calculate_monthly_cost)
+  * [GetPaymentMethods](#get_payment_methods)
   * [ValidateFinancedAmount](#validate_financed_amount)
   * [CreateProductWidget](#create_product_widget)
   * [CreateCheckout](#create_checkout)
@@ -141,6 +142,65 @@ var request = new CalculateMonthlyCostRequest
 
 var response = await wasaKreditClient.CalculateMonthlyCostAsync(request);
 
+```
+
+### <a name="get_payment_methods">GetPaymentMethods</a>
+
+This method calculates the cost for all available payment methods and contract lengths (if applicable) for you as a partner to Wasa Kredit. This method is especially useful if you are offering multiple Wasa Kredit payment methods. 
+
+```c#
+GetPaymentMethodsResponse GetPaymentMethods(string totalAmount)
+```
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| totalAmount | *string* (required) | The total financed amount. |
+
+#### Response
+
+##### GetPaymentMethodsResponse
+
+| Name | Type | Description |
+|---|---|---|
+| PaymentMethods | *List[**PaymentMethod**]* | A list containing the information for each of your available Wasa Kredit payment methods. |
+
+##### PaymentMethod
+
+| Name | Type | Description |
+|---|---|---|
+| Id | string | The payment method identifier name. *Ex: "leasing" or "rental"* |
+| DisplayName | string | The payment method as a friendly name. *Ex: "Leasing" or "Rental"* |
+| Options | **Options** | An object containing various options such as contract lenghts, costs etc. for each individual payment method. |
+
+##### Options
+**Please notice that the options object is dynamic and will differ for different payment methods. For leasing and rental it is structured in the following way.**
+
+| Name | Type | Description |
+|---|---|---|
+| DefaultContractLength | int | The default contract length which will be pre-selected in the checkout. |
+| ContractLengths | *List[**ContractLengthItem**]* | Your available contract lengths and their monthly costs. |
+
+##### ContractLengthItem
+
+| Name | Type | Description |
+|---|---|---|
+| ContractLength | int | The contract length in months. |
+| MonthlyCost | **CurrencyAmount** | The monthly cost and currency for the contract length. |
+
+##### CurrencyAmount
+
+| Name | Type | Description |
+|---|---|---|
+| Amount | string | The amount. |
+| Currency | string | The currency. |
+
+#### Example usage
+
+```c#
+string amount = "20000";
+var response = await wasaKreditClient.GetPaymentMethods(amount);
 ```
 
 ### <a name="validate_financed_amount">ValidateFinancedAmount</a>

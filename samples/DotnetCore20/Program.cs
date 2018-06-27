@@ -58,7 +58,7 @@ namespace DotnetCore20
 
             try
             {
-                var response = client.GetPaymentMethods(RequestMockFactory.GetPaymentMethodsRequest());
+                var response = client.GetPaymentMethods("20000");
                 var firstPaymentMethod = response.PaymentMethods.ToList()[0];
 
                 Console.WriteLine($"Payment method is \"{firstPaymentMethod.DisplayName}\" with a default contract length of {firstPaymentMethod.Options.DefaultContractLength} months.");
