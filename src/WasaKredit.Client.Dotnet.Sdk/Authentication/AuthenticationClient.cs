@@ -13,8 +13,8 @@ namespace WasaKredit.Client.Dotnet.Sdk.Authentication
     {
         private static AuthenticationClient _instance;
         private static IRestClient _restClient;
-        private static string _clientId;
-        private static string _clientSecret;
+        private string _clientId;
+        private string _clientSecret;
         private static readonly string _authenticationUrl = "https://b2b.services.wasakredit.se/auth/connect/token";
 
         private AccessToken _accessToken;
@@ -27,7 +27,7 @@ namespace WasaKredit.Client.Dotnet.Sdk.Authentication
             get { return _instance ?? (_instance = new AuthenticationClient()); }
         }
 
-        private AuthenticationClient() {}
+        public AuthenticationClient() {}
 
         /// <summary>
         /// Sets client credentials for the authentication client singleton instance.
