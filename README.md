@@ -54,7 +54,7 @@ Before utilizing any of the SDK methods the authentication and the Wasa Kredit A
 
 If your platform only handles one Partner, you can use the Singleton implementation of the AuthenticationClient and WasaKreditClient.
 
-If your platform will handle multiple Partners on in the same application scope, you need to create instances of AuthenticationClient and WasaKreditClient for each Partner.
+If your platform will handle multiple Partners in the same application scope, you need to create instances of AuthenticationClient and WasaKreditClient for each Partner.
 
 ### Initialization single partner
 
