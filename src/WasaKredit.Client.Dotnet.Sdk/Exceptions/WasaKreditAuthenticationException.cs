@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 
-namespace WasaKredit.Client.Dotnet.Sdk.Models
+namespace WasaKredit.Client.Dotnet.Sdk.Exceptions
 {
     public class WasaKreditAuthenticationException : Exception
     {

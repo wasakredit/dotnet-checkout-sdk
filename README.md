@@ -2,6 +2,7 @@
 
 ## Changelog
 
+* 2018-07-06: Change namespaces of models for more consistency and to match the folder structure
 * 2018-07-05: Added support for multiple partners in the same application instance
 * 2017-12-13: Corrected response types for get and update order
 
