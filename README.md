@@ -83,7 +83,7 @@ wasaKreditClient.Initialize(authenticationClient, testMode);
 
 ### Initialization multiple partners
 
-Instead of using the singleton instances as described for single partners above, you need to create separate AuthenticationClients and WasaKreditClients for each Partner in your application.
+Instead of using the singleton instances as described for single partners above, you need to create separate AuthenticationClient and WasaKreditClient instances for each Partner in your application.
 
 #### Authentication
 
@@ -104,7 +104,7 @@ authenticationClient2.SetClientCredentials("<partner2 client id>", "<partner2 cl
 
 The WasaKreditClient is the client used to access the SDK methods. The client is initialized in two steps.
 1. Create a new instance of the WasaKreditClient for each Partner in your application.
-2. Initialize the client by calling the Initialize method, passing the authentication client of that Partner and a boolean flag indication whether or not to use testmode for the requests.
+2. Initialize the client by calling the Initialize method, passing the authentication client of that Partner and a boolean flag indication whether or not to use test mode for the requests.
 
 ```c#
 bool testModePartner1 = true;
