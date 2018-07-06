@@ -4,7 +4,7 @@ using System.Linq;
 using SamplesHelperClasses;
 using WasaKredit.Client.Dotnet.Sdk;
 using WasaKredit.Client.Dotnet.Sdk.Authentication;
-using WasaKredit.Client.Dotnet.Sdk.Models;
+using WasaKredit.Client.Dotnet.Sdk.Exceptions;
 
 namespace DotnetCore20
 {

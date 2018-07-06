@@ -1,4 +1,4 @@
-﻿namespace WasaKredit.Client.Dotnet.Sdk.Requests
+﻿namespace WasaKredit.Client.Dotnet.Sdk.Contracts.Requests
 {
     public class AddOrderReferenceRequest
     {

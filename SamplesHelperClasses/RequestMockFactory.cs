@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using WasaKredit.Client.Dotnet.Sdk.Contracts;
-using WasaKredit.Client.Dotnet.Sdk.Contracts.GetPaymentMethods;
-using WasaKredit.Client.Dotnet.Sdk.Requests;
+using WasaKredit.Client.Dotnet.Sdk.Contracts.Requests;
 
 namespace SamplesHelperClasses
 {

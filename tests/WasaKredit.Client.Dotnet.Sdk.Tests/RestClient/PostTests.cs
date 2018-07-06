@@ -3,7 +3,7 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using WasaKredit.Client.Dotnet.Sdk.Models;
+using WasaKredit.Client.Dotnet.Sdk.Exceptions;
 using Xunit;
 
 namespace WasaKredit.Client.Dotnet.Sdk.Tests.RestClient

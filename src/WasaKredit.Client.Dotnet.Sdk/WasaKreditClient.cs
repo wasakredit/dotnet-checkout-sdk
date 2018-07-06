@@ -4,11 +4,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using WasaKredit.Client.Dotnet.Sdk.Authentication;
-using WasaKredit.Client.Dotnet.Sdk.Contracts.GetPaymentMethods;
-using WasaKredit.Client.Dotnet.Sdk.Models;
-using WasaKredit.Client.Dotnet.Sdk.Requests;
-using WasaKredit.Client.Dotnet.Sdk.Responses;
+using WasaKredit.Client.Dotnet.Sdk.Contracts.Requests;
+using WasaKredit.Client.Dotnet.Sdk.Contracts.Responses;
 using WasaKredit.Client.Dotnet.Sdk.RestClient;
+using WasaKredit.Client.Dotnet.Sdk.Exceptions;
 
 [assembly: InternalsVisibleTo("WasaKredit.Client.Dotnet.Sdk.Tests")]
 

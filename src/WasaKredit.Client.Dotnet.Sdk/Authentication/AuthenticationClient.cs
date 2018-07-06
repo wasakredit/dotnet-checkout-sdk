@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using WasaKredit.Client.Dotnet.Sdk.Models;
+using WasaKredit.Client.Dotnet.Sdk.Exceptions;
 using WasaKredit.Client.Dotnet.Sdk.RestClient;
 
 namespace WasaKredit.Client.Dotnet.Sdk.Authentication

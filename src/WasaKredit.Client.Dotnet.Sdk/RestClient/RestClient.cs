@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using WasaKredit.Client.Dotnet.Sdk.Models;
 using WasaKredit.Client.Dotnet.Sdk.Exceptions;
 using System.Threading;
 using System.Runtime.CompilerServices;
