@@ -8,7 +8,7 @@
     <Company>Wasa Kredit</Company>
     <Copyright>Wasa Kredit</Copyright>
     <Description>dotnet SDK for Wasa Kredit Checkout</Description>
-    <Version>1.0.10</Version>
+    <Version>1.0.11</Version>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using SamplesHelperClasses;
 using WasaKredit.Client.Dotnet.Sdk;
 using WasaKredit.Client.Dotnet.Sdk.Authentication;
-using WasaKredit.Client.Dotnet.Sdk.Models;
+using WasaKredit.Client.Dotnet.Sdk.Exceptions;
 
 namespace DotnetCore20
 {
@@ -25,8 +26,9 @@ namespace DotnetCore20
             GetOrderStatusExample();
             UpdateOrderStatusExample();
             AddOrderReferenceExample();
-        }
 
+            MultiplePartnersExample();
+        }
 
         private static void CalculateMonthlyCostExample()
         {
@@ -118,10 +120,13 @@ namespace DotnetCore20
             }
         }
 
-        public static void CreateCheckoutExample()
+        public static void CreateCheckoutExample(WasaKreditClient client = null)
         {
-            var client = WasaKreditClient.Instance;
-            client.Initialize(_authenticationClient, true);
+            if (client == null)
+            {
+                client = WasaKreditClient.Instance;
+                client.Initialize(_authenticationClient, true);
+            }
 
             try
             {
@@ -232,6 +237,49 @@ namespace DotnetCore20
             {
                 PrintException(ex);
             }
+        }
+
+        private static void MultiplePartnersExample()
+        {
+            var wasaKreditClients = SetupMultiplePartners();
+
+            CreateCheckoutExample(wasaKreditClients["PartnerOneId"]);
+            CreateCheckoutExample(wasaKreditClients["PartnerTwoId"]);
+
+            //reuse access tokens 
+            CreateCheckoutExample(wasaKreditClients["PartnerOneId"]);
+            CreateCheckoutExample(wasaKreditClients["PartnerTwoId"]);
+        }
+
+        private static Dictionary<string, WasaKreditClient> SetupMultiplePartners()
+        {
+            var credentialsPartnerOne = ("PartnerOneId", "PartnerOneSecret");
+            var credentialsPartnerTwo = ("PartnerTwoId", "PartnerTwoSecret");
+
+            // Setup AuthenticationClients and WasaKreditClients for all Partners
+            var authenticationClientPartnerOne = new AuthenticationClient();
+            authenticationClientPartnerOne.SetClientCredentials(
+                credentialsPartnerOne.Item1,
+                credentialsPartnerOne.Item2);
+
+            var authenticationClientPartnerTwo = new AuthenticationClient();
+            authenticationClientPartnerTwo.SetClientCredentials(
+                credentialsPartnerTwo.Item1,
+                credentialsPartnerTwo.Item2);
+
+            var wasaClientPartnerOne = new WasaKreditClient();
+            wasaClientPartnerOne.Initialize(authenticationClientPartnerOne, true);
+
+            var wasaClientPartnerTwo = new WasaKreditClient();
+            wasaClientPartnerTwo.Initialize(authenticationClientPartnerTwo, true);
+
+            // Preferably, the WasaKreditClients should be setup on application startup and 
+            // kept available for reuse during runtime via your dependency injector.
+            var wasaKreditClients = new Dictionary<string, WasaKreditClient>();
+            wasaKreditClients.Add(credentialsPartnerOne.Item1, wasaClientPartnerOne);
+            wasaKreditClients.Add(credentialsPartnerTwo.Item1, wasaClientPartnerTwo);
+
+            return wasaKreditClients;
         }
 
         private static void PrintException(WasaKreditApiException ex)

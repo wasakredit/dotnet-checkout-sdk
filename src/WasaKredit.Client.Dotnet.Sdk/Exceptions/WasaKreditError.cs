@@ -1,9 +1,7 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using WasaKredit.Client.Dotnet.Sdk.Exceptions;
 
-namespace WasaKredit.Client.Dotnet.Sdk.Models
+namespace WasaKredit.Client.Dotnet.Sdk.Exceptions
 {
     public class WasaKreditError
     {

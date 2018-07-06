@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WasaKredit.Client.Dotnet.Sdk.Contracts.GetPaymentMethods
+namespace WasaKredit.Client.Dotnet.Sdk.Contracts
 {
     public class Options
     {

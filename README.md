@@ -2,6 +2,8 @@
 
 ## Changelog
 
+* 2018-07-06: Change namespaces of models for more consistency and to match the folder structure
+* 2018-07-05: Added support for multiple partners in the same application instance
 * 2017-12-13: Corrected response types for get and update order
 
 **Table of Content**
@@ -51,7 +53,13 @@ There are two sample console projects included in the SDK. Notice that these sam
 
 Before utilizing any of the SDK methods the authentication and the Wasa Kredit API client must be initialized.
 
-### Authentication
+If your platform only handles one Partner, you can use the Singleton implementation of the AuthenticationClient and WasaKreditClient.
+
+If your platform will handle multiple Partners in the same application scope, you need to create instances of AuthenticationClient and WasaKreditClient for each Partner.
+
+### Initialization single partner
+
+#### Authentication
 
 Authentication is done in two steps.
 1. Access the authentication client singleton instance through the AuthenticationClient.Instance property.
@@ -62,7 +70,7 @@ var authenticationClient = AuthenticationClient.Instance;
 authenticationClient.SetClientCredentials("<your client id here>", "<your client secret here>");
 ```
 
-### WasaKreditClient
+#### WasaKreditClient
 
 The WasaKreditClient is the client used to access the SDK methods. The client is accessed and initialized in two steps.
 1. Access the Wasa Kredit API client singleton instance through the WasaKreditClient.Instance property.
@@ -73,6 +81,46 @@ bool testMode = true;
 var wasaKreditClient = WasaKreditClient.Instance;
 wasaKreditClient.Initialize(authenticationClient, testMode);
 ```
+
+### Initialization multiple partners
+
+Instead of using the singleton instances as described for single partners above, you need to create separate AuthenticationClient and WasaKreditClient instances for each Partner in your application.
+
+#### Authentication
+
+Authentication is done in two steps for each partner.
+1. Create a new AuthenticationClient.
+2. Set the client credentials (client id and client secret), provided by Wasa Kredit, by calling the SetClientCredentials method. The client will request and cache access tokens automatically when used.
+
+```c#
+var authenticationClient1 = new AuthenticationClient();
+authenticationClient1.SetClientCredentials("<partner1 client id>", "<partner1 client secret>");
+
+var authenticationClient2 = new AuthenticationClient();
+authenticationClient2.SetClientCredentials("<partner2 client id>", "<partner2 client secret>");
+
+```
+
+#### WasaKreditClient
+
+The WasaKreditClient is the client used to access the SDK methods. The client is initialized in two steps.
+1. Create a new instance of the WasaKreditClient for each Partner in your application.
+2. Initialize the client by calling the Initialize method, passing the authentication client of that Partner and a boolean flag indication whether or not to use test mode for the requests.
+
+```c#
+bool testModePartner1 = true;
+var wasaKreditClient1 = new WasaKreditClient();
+wasaKreditClient1.Initialize(authenticationClient1, testModePartner1);
+
+bool testModePartner2 = true;
+var wasaKreditClient2 = new WasaKreditClient();
+wasaKreditClient2.Initialize(authenticationClient2, testModePartner2);
+```
+
+In the example above, _wasaKreditClient1_ should be used when making API requests for Partner 1 while Partner 2 has its own instance in _wasaKreditClient2_.
+
+In order to utilize cached access tokens and easier use of the SDK, you should aim to register your WasaKreditClients at startup of your application and keep them available for reuse by resolving the correct client for each Partner during runtime. A good way to do this is via dependency injection.
+
 
 ## <a name="available_methods">Available Methods</a>
 

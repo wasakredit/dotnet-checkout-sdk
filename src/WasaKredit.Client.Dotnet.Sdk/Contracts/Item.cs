@@ -1,6 +1,4 @@
-﻿using WasaKredit.Client.Dotnet.Sdk.Models;
-
-namespace WasaKredit.Client.Dotnet.Sdk.Contracts
+﻿namespace WasaKredit.Client.Dotnet.Sdk.Contracts
 {
     public class Item
     {

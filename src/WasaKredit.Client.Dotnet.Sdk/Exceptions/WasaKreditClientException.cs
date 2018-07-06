@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WasaKredit.Client.Dotnet.Sdk.Models
+namespace WasaKredit.Client.Dotnet.Sdk.Exceptions
 {
     public class WasaKreditClientException : ArgumentException
     {

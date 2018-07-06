@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace WasaKredit.Client.Dotnet.Sdk.RestClient
+namespace WasaKredit.Client.Dotnet.Sdk.Exceptions
 {
     internal class RequestTimeoutException : System.Exception
     {

@@ -1,11 +1,8 @@
 ﻿using RichardSzalay.MockHttp;
-using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using WasaKredit.Client.Dotnet.Sdk.Authentication;
-using WasaKredit.Client.Dotnet.Sdk.Models;
+using WasaKredit.Client.Dotnet.Sdk.Exceptions;
 using WasaKredit.Client.Dotnet.Sdk.Tests.RestClient;
 using Xunit;
 

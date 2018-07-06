@@ -4,11 +4,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using WasaKredit.Client.Dotnet.Sdk.Authentication;
-using WasaKredit.Client.Dotnet.Sdk.Contracts.GetPaymentMethods;
-using WasaKredit.Client.Dotnet.Sdk.Models;
-using WasaKredit.Client.Dotnet.Sdk.Requests;
-using WasaKredit.Client.Dotnet.Sdk.Responses;
+using WasaKredit.Client.Dotnet.Sdk.Contracts.Requests;
+using WasaKredit.Client.Dotnet.Sdk.Contracts.Responses;
 using WasaKredit.Client.Dotnet.Sdk.RestClient;
+using WasaKredit.Client.Dotnet.Sdk.Exceptions;
 
 [assembly: InternalsVisibleTo("WasaKredit.Client.Dotnet.Sdk.Tests")]
 
@@ -21,13 +20,11 @@ namespace WasaKredit.Client.Dotnet.Sdk
     {
         private static WasaKreditClient _instance;
         private static IRestClient _restClient;
-        private static IAuthenticationClient _authenticationClient;
-        private static bool _testMode;
+        private IAuthenticationClient _authenticationClient;
+        private bool _testMode;
         private static readonly string _checkoutGateWayApiUrl = "https://b2b.services.wasakredit.se";
 
-
-
-        private static AccessToken _authorizationToken;
+        private AccessToken _authorizationToken;
         private static readonly string _currency = "SEK";
 
         /// <summary>
@@ -38,7 +35,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             get { return _instance ?? (_instance = new WasaKreditClient()); }
         }
 
-        private WasaKreditClient(){}
+        public WasaKreditClient(){}
 
         /// <summary>
         /// Initializes the singleton instance of the Wasa Checkout API client.
