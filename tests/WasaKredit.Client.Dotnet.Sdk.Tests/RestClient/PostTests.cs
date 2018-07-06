@@ -11,17 +11,11 @@ namespace WasaKredit.Client.Dotnet.Sdk.Tests.RestClient
     public class PostTests : TestBase
     {
         [Theory]
-        [InlineData(HttpStatusCode.OK, HttpStatusCode.OK)]
-        [InlineData(HttpStatusCode.Created, HttpStatusCode.Created)]
-        public async void when_receiving_postrequest_response_with_correct_status_code_expect_correct_deserilized_result(HttpStatusCode expectedStatusCode, HttpStatusCode actualStatusCode)
+        [InlineData(HttpStatusCode.OK)]
+        [InlineData(HttpStatusCode.Created)]
+        public async void When_Receiving_PostRequest_Response_With_Correct_Status_Code_Expect_Correct_Deserialized_Result(HttpStatusCode expectedStatusCode)
         {
-            // Arrange
-            var httpResponseMessage = new HttpResponseMessage
-            {
-                StatusCode = HttpStatusCode.OK,
-                Content = new StringContent(FakeJsonResult, Encoding.UTF8, "application/json")
-            };
-            
+           
             HttpClientMock
                 .When(HttpMethod.Post, "http://localhost/*")
                 .Respond(expectedStatusCode, "application/json", FakeJsonResult);
