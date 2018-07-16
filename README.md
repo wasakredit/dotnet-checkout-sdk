@@ -346,7 +346,7 @@ CreateCheckoutResponse CreateCheckout(CreateCheckoutRequest request)
 | DeliveryAddress | *Address* | Address object containing the delivery address. |
 | RecipientName | *string* | Name of the recipient. |
 | RecipientPhone | *string* | Phone number of the recipient. |
-| RequestDomain | *string* | The domain of the partner, used to allow CORS. |
+| RequestDomain | *string* (required) | The domain of the partner, used to allow CORS. |
 | ConfirmationCallbackUrl | *string* | Url to the partner's confirmation page. |
 | PingUrl | *string* | Receiver url for order status change pingback notifications. |
 
@@ -443,9 +443,9 @@ var request = new CreateCheckoutRequest
         },
     RecipientName = "Anders Svensson",
     RecipientPhone = "070-1234567",
-    RequestDomain = "https://www.wasa-partner.se",
-    ConfirmationCallbackUrl = "https://www.wasa-partner.se/payment-callback/",
-    PingUrl = "https://www.wasa-partner.se/payment-callback/"
+    RequestDomain = "https://YOUR-BASE-DOMAIN.se",
+    ConfirmationCallbackUrl = "https://YOUR-BASE-DOMAIN.se/payment-callback/",
+    PingUrl = "https://YOUR-BASE-DOMAIN.se/payment-callback/"
 };
 
 var response = client.CreateCheckout(request);
