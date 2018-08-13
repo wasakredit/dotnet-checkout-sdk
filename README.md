@@ -443,9 +443,9 @@ var request = new CreateCheckoutRequest
         },
     RecipientName = "Anders Svensson",
     RecipientPhone = "070-1234567",
-    RequestDomain = "https://YOUR-BASE-DOMAIN.se",
-    ConfirmationCallbackUrl = "https://YOUR-BASE-DOMAIN.se/payment-callback/",
-    PingUrl = "https://YOUR-BASE-DOMAIN.se/payment-callback/"
+    RequestDomain = "https://YOUR-BASE-DOMAIN",
+    ConfirmationCallbackUrl = "https://YOUR-BASE-DOMAIN/payment-callback/",
+    PingUrl = "https://YOUR-BASE-DOMAIN/payment-callback/"
 };
 
 var response = client.CreateCheckout(request);
