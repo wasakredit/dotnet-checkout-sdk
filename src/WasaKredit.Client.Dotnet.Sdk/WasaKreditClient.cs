@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
@@ -267,11 +268,42 @@ namespace WasaKredit.Client.Dotnet.Sdk
             return response.Result;
         }
 
+        public GetMonthlyCostWidgetResponse GetMonthlyCostWidget(string amount)
+        {
+            CheckInitialized();
+            Authorize();
+
+            var url = string.Concat(_checkoutGateWayApiUrl, $"/v2/widgets/monthly-cost?amount={amount}&currency=SEK");
+
+            var response = _restClient.Get<string>(url, HttpStatusCode.OK, _authorizationToken.Token);
+
+            return new GetMonthlyCostWidgetResponse
+            {
+                HtmlSnippet = response.ResultString
+            };
+        }
+
+        public async Task<GetMonthlyCostWidgetResponse> GetMonthlyCostWidgetAsync(string amount, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            CheckInitialized();
+            await AuthorizeAsync();
+
+            var url = string.Concat(_checkoutGateWayApiUrl, $"/v2/widgets/monthly-cost?amount={amount}&currency=SEK");
+
+            var response = await _restClient.GetAsync<string>(url, HttpStatusCode.OK, _authorizationToken.Token, cancellationToken: cancellationToken);
+
+            return new GetMonthlyCostWidgetResponse
+            {
+                HtmlSnippet = response.ResultString
+            };
+        }
+
         /// <summary>
         /// Creates and provides a Product Widget, in the form of a html snippet, that may be displayed close to the price information on the product details view on your e-commerce site.
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
+        [Obsolete("CreateProductWidget is obsolete, use GetMonthlyCostWidget instead")]
         public CreateProductWidgetResponse CreateProductWidget(CreateProductWidgetRequest request)
         {
             CheckInitialized();
@@ -293,6 +325,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [Obsolete("CreateProductWidgetAsync is obsolete, use GetMonthlyCostWidgetAsync instead")]
         public async Task<CreateProductWidgetResponse> CreateProductWidgetAsync(CreateProductWidgetRequest request, CancellationToken cancellationToken = default(CancellationToken))
         {
             CheckInitialized();

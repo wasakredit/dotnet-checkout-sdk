@@ -20,7 +20,7 @@ namespace DotnetCore20
             CalculateMonthlyCostExample();
             GetPaymentMethodsExample();
             ValidateFinancedAmountExample();
-            CreateProductWidgetExample();
+            CreateMonthlyCostWidgetExample();
             CreateCheckoutExample();
             GetOrderExample();
             GetOrderStatusExample();
@@ -99,14 +99,14 @@ namespace DotnetCore20
             }
         }
 
-        public static void CreateProductWidgetExample()
+        public static void CreateMonthlyCostWidgetExample()
         {
             var client = WasaKreditClient.Instance;
             client.Initialize(_authenticationClient, true);
 
             try
             {
-                var response = client.CreateProductWidget(RequestMockFactory.CreateProductWidgetRequest());
+                var response = client.GetMonthlyCostWidget("10000");
                 Console.WriteLine($"Product widget html snippet:\n{response.HtmlSnippet}");
                 Console.ReadLine();
             }
