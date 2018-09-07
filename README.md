@@ -2,6 +2,7 @@
 
 ## Changelog
 
+* 2018-09-04: Replaced CreateProductWidget with GetMonthlyCostWidget 
 * 2018-07-06: Change namespaces of models for more consistency and to match the folder structure
 * 2018-07-05: Added support for multiple partners in the same application instance
 * 2017-12-13: Corrected response types for get and update order
@@ -15,7 +16,7 @@
   * [CalculateMonthlyCost](#calculate_monthly_cost)
   * [GetPaymentMethods](#get_payment_methods)
   * [ValidateFinancedAmount](#validate_financed_amount)
-  * [CreateProductWidget](#create_product_widget)
+  * [GetMonthlyCostWidget](#get_monthly_cost_widget)
   * [CreateCheckout](#create_checkout)
   * [Handling custom checkout callbacks](#custom_callbacks)
   * [GetOrder](#get_order)
@@ -279,45 +280,33 @@ ValidateFinancedAmountResponse ValidateFinancedAmount(string amount)
 var response = client.ValidateFinancedAmount("10000.00");
 ```
 
-### <a name="create_product_widget">CreateProductWidget</a>
+### <a name="get_monthly_cost_widget">GetMonthlyCostWidget</a>
 
-To inform the customer about Wasa Kredit financing as an available payment method, this method provides a Product Widget, in the form of a html snippet, that may be displayed close to the price information on the product details view on your e-commerce site.
+To inform the customer about Wasa Kredit financing as a payment method, this method provides a Product Widget in the form of a html snippet that may be displayed close to the price information on the product details view on your e-commerce site. The widget contains a monthly cost as well as detailed information about financing if expanded.
 
 ```c#
-CreateProductWidgetResponse CreateProductWidget(CreateProductWidgetRequest request)
+GetMonthlyCostWidgetResponse GetMonthlyCostWidget(string amount)
 ```
 
 #### Parameters
 
-##### CreateProductWidgetRequest
-
 | Name | Type | Description |
 |---|---|---|
-| FinancialProduct | *string* (required) | The financial product. *Ex: "Leasing"*. |
-| PriceExVat | *Price* (required) | The product price excluding VAT. |
+| Amount | *string* (required) | The total financed amount of a product. |
 
 #### Response
 
-##### CreateProductWidgetResponse
+##### GetMonthlyCostWidgetResponse
 
 | Name | Type | Description |
 |---|---|---|
-| HtmlSnippet | *string* | The product widget snippet for embedding. |
+| HtmlSnippet | *string* | The monthly cost widget snippet for embedding. |
 
 #### Example usage
 
 ```c#
-var request = new CreateProductWidgetRequest
-{
-    FinancialProduct = "Leasing",
-    PriceExVat = new Price
-    {
-        Amount = "1299.50",
-        Currency = "SEK"
-    }
-};
 
-var response = client.CreateProductWidget(request);
+var response = client.GetMonthlyCostWidget("10000");
 ```
 
 ### <a name="create_checkout">CreateCheckout</a>
