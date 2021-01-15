@@ -45,7 +45,9 @@ namespace WasaKredit.Client.Dotnet.Sdk.RestClient
             _client = client;
             _serializerSettings = serializerSettings;
         }
-        
+
+     
+
         public WasaKreditResponse<TResponse> Get<TResponse>(string uri, HttpStatusCode expectedStatusCode, string authorizationToken = null, string authorizationMethod = "Bearer")
         {
             var responseMessage = DoGetDelete(uri, HttpMethod.Get, authorizationToken, authorizationMethod).Result;
