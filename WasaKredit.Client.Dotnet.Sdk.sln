@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WasaKredit.Client.Dotnet.Sdk", "src\WasaKredit.Client.Dotnet.Sdk\WasaKredit.Client.Dotnet.Sdk.csproj", "{021D0F6C-1803-4D08-8AC9-70865FC46727}"
 EndProject
@@ -15,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WasaKredit.Client.Dotnet.Sd
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotnetFramework45", "samples\DotnetFramework45\DotnetFramework45.csproj", "{3DE884E8-C7A7-43A5-8086-4E2E2B0D7935}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotnetCore20", "samples\DotnetCore20\DotnetCore20.csproj", "{596900CD-B956-4228-A6B7-A9643D0861B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotnetCore31", "samples\DotnetCore20\DotnetCore31.csproj", "{596900CD-B956-4228-A6B7-A9643D0861B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SamplesHelperClasses", "SamplesHelperClasses\SamplesHelperClasses.csproj", "{D2E79EEE-E6AC-4F1B-905C-D237B4E61745}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SamplesHelperClasses", "SamplesHelperClasses\SamplesHelperClasses.csproj", "{D2E79EEE-E6AC-4F1B-905C-D237B4E61745}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

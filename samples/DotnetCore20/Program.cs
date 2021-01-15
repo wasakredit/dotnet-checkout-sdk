@@ -6,7 +6,7 @@ using WasaKredit.Client.Dotnet.Sdk;
 using WasaKredit.Client.Dotnet.Sdk.Authentication;
 using WasaKredit.Client.Dotnet.Sdk.Exceptions;
 
-namespace DotnetCore20
+namespace DotnetCore31
 {
     class Program
     {
@@ -15,6 +15,7 @@ namespace DotnetCore20
         static void Main(string[] args)
         {
             _authenticationClient = AuthenticationClient.Instance;
+            //When using testmode, use test_client_id and _test_client_secret which should be supplied by WasaKredit. 
             _authenticationClient.SetClientCredentials("#Client_Id#", "#Client_Secret#");
 
             CalculateMonthlyCostExample();

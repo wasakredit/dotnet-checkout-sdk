@@ -9,6 +9,7 @@ using WasaKredit.Client.Dotnet.Sdk.Contracts.Requests;
 using WasaKredit.Client.Dotnet.Sdk.Contracts.Responses;
 using WasaKredit.Client.Dotnet.Sdk.RestClient;
 using WasaKredit.Client.Dotnet.Sdk.Exceptions;
+using static WasaKredit.Client.Dotnet.Sdk.Settings;
 
 [assembly: InternalsVisibleTo("WasaKredit.Client.Dotnet.Sdk.Tests")]
 
@@ -22,9 +23,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
         private static WasaKreditClient _instance;
         private static IRestClient _restClient;
         private IAuthenticationClient _authenticationClient;
-        private bool _testMode;
-        private static readonly string _checkoutGateWayApiUrl = "https://b2b.services.wasakredit.se";
-
+        private bool _testMode = false;
         private AccessToken _authorizationToken;
         private static readonly string _currency = "SEK";
 
@@ -35,6 +34,8 @@ namespace WasaKredit.Client.Dotnet.Sdk
         {
             get { return _instance ?? (_instance = new WasaKreditClient()); }
         }
+
+        private string CheckoutGateWayApiUrl => _testMode ? TEST_CHECKOUT_GATEWAY_API_URL : CHECKOUT_GATEWAY_API_URL;
 
         public WasaKreditClient(){}
 
@@ -48,7 +49,9 @@ namespace WasaKredit.Client.Dotnet.Sdk
         {
             _restClient = new RestClient.RestClient(TimeSpan.FromSeconds(requestTimeout), testMode);
             _authenticationClient = authenticationClient;
+            
             _testMode = testMode;
+            _authenticationClient.SetTestMode(testMode);
         }
 
         /// <summary>
@@ -62,7 +65,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             CheckInitialized();
             Authorize();
 
-            var url = string.Concat(_checkoutGateWayApiUrl, "/v1/leasing");
+            var url = string.Concat(CheckoutGateWayApiUrl, "/v1/leasing");
 
             var response = _restClient
                             .Post<CalculateLeasingCostRequest, CalculateLeasingCostResponse>(url, System.Net.HttpStatusCode.OK, request, _authorizationToken.Token);
@@ -82,7 +85,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             CheckInitialized();
             await AuthorizeAsync();
 
-            var url = string.Concat(_checkoutGateWayApiUrl, "/v1/leasing");
+            var url = string.Concat(CheckoutGateWayApiUrl, "/v1/leasing");
 
             var response = await _restClient.PostAsync<CalculateLeasingCostRequest, CalculateLeasingCostResponse>(url, System.Net.HttpStatusCode.OK, request, _authorizationToken.Token, "Bearer", cancellationToken);
 
@@ -99,7 +102,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             CheckInitialized();
             Authorize();
 
-            var url = string.Concat(_checkoutGateWayApiUrl, "/v1/monthly-cost");
+            var url = string.Concat(CheckoutGateWayApiUrl, "/v1/monthly-cost");
 
             var response = _restClient
                 .Post<CalculateMonthlyCostRequest, CalculateMonthlyCostResponse>(url, System.Net.HttpStatusCode.OK, request, _authorizationToken.Token);
@@ -118,7 +121,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             CheckInitialized();
             await AuthorizeAsync();
 
-            var url = string.Concat(_checkoutGateWayApiUrl, "/v1/monthly-cost");
+            var url = string.Concat(CheckoutGateWayApiUrl, "/v1/monthly-cost");
 
             var response = await _restClient
                 .PostAsync<CalculateMonthlyCostRequest, CalculateMonthlyCostResponse>(url, System.Net.HttpStatusCode.OK, request, _authorizationToken.Token, "Bearer", cancellationToken);
@@ -137,7 +140,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             CheckInitialized();
             Authorize();
 
-            var url = string.Concat(_checkoutGateWayApiUrl, "/v1/leasing/total-cost");
+            var url = string.Concat(CheckoutGateWayApiUrl, "/v1/leasing/total-cost");
 
             var response = _restClient
                 .Post<CalculateTotalLeasingCostRequest, CalculateTotalLeasingCostResponse>(url, System.Net.HttpStatusCode.OK, request, _authorizationToken.Token);
@@ -157,7 +160,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             CheckInitialized();
             await AuthorizeAsync();
 
-            var url = string.Concat(_checkoutGateWayApiUrl, "/v1/leasing/total-cost");
+            var url = string.Concat(CheckoutGateWayApiUrl, "/v1/leasing/total-cost");
 
             var response = await _restClient.PostAsync<CalculateTotalLeasingCostRequest, CalculateTotalLeasingCostResponse>(url, System.Net.HttpStatusCode.OK, request, _authorizationToken.Token, "Bearer", cancellationToken);
 
@@ -174,7 +177,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             CheckInitialized();
             Authorize();
 
-            var url = $"{_checkoutGateWayApiUrl}/v1/payment-methods?total_amount={totalAmount}&currency={_currency}";
+            var url = $"{CheckoutGateWayApiUrl}/v1/payment-methods?total_amount={totalAmount}&currency={_currency}";
             var response = _restClient.Get<GetPaymentMethodsResponse>(url, System.Net.HttpStatusCode.OK, _authorizationToken.Token);
             return response.Result;
         }
@@ -190,7 +193,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             CheckInitialized();
             Authorize();
 
-            var url = $"{_checkoutGateWayApiUrl}/v1/payment-methods?total_amount={totalAmount}&currency={_currency}";
+            var url = $"{CheckoutGateWayApiUrl}/v1/payment-methods?total_amount={totalAmount}&currency={_currency}";
             var response = await _restClient.GetAsync<GetPaymentMethodsResponse>(url, System.Net.HttpStatusCode.OK, _authorizationToken.Token, "Bearer", cancellationToken);
             return response.Result;
         }
@@ -206,7 +209,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             CheckInitialized();
             Authorize();
 
-            var url = string.Concat(_checkoutGateWayApiUrl, "/v1/leasing/validate-amount?amount=", amount);
+            var url = string.Concat(CheckoutGateWayApiUrl, "/v1/leasing/validate-amount?amount=", amount);
 
             var response = _restClient.Get<ValidateLeasingAmountResponse>(url, System.Net.HttpStatusCode.OK, _authorizationToken.Token, "Bearer");
 
@@ -225,7 +228,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             CheckInitialized();
             await AuthorizeAsync();
 
-            var url = string.Concat(_checkoutGateWayApiUrl, "/v1/leasing/validate-amount?amount=", amount);
+            var url = string.Concat(CheckoutGateWayApiUrl, "/v1/leasing/validate-amount?amount=", amount);
 
             var response = await _restClient.GetAsync<ValidateLeasingAmountResponse>(url, System.Net.HttpStatusCode.OK, _authorizationToken.Token, "Bearer", cancellationToken);
 
@@ -242,7 +245,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             CheckInitialized();
             Authorize();
 
-            var url = string.Concat(_checkoutGateWayApiUrl, "/v1/validate-financed-amount/?amount=", amount);
+            var url = string.Concat(CheckoutGateWayApiUrl, "/v1/validate-financed-amount/?amount=", amount);
 
             var response = _restClient.Get<ValidateFinancedAmountResponse>(url, System.Net.HttpStatusCode.OK, _authorizationToken.Token, "Bearer");
 
@@ -261,7 +264,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             CheckInitialized();
             await AuthorizeAsync();
 
-            var url = string.Concat(_checkoutGateWayApiUrl, "/v1/validate-financed-amount/?amount=", amount);
+            var url = string.Concat(CheckoutGateWayApiUrl, "/v1/validate-financed-amount/?amount=", amount);
 
             var response = await _restClient.GetAsync<ValidateFinancedAmountResponse>(url, System.Net.HttpStatusCode.OK, _authorizationToken.Token, "Bearer", cancellationToken);
 
@@ -273,7 +276,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             CheckInitialized();
             Authorize();
 
-            var url = string.Concat(_checkoutGateWayApiUrl, $"/v2/widgets/monthly-cost?amount={amount}&currency=SEK");
+            var url = string.Concat(CheckoutGateWayApiUrl, $"/v2/widgets/monthly-cost?amount={amount}&currency=SEK");
 
             var response = _restClient.Get<string>(url, HttpStatusCode.OK, _authorizationToken.Token);
 
@@ -288,7 +291,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             CheckInitialized();
             await AuthorizeAsync();
 
-            var url = string.Concat(_checkoutGateWayApiUrl, $"/v2/widgets/monthly-cost?amount={amount}&currency=SEK");
+            var url = string.Concat(CheckoutGateWayApiUrl, $"/v2/widgets/monthly-cost?amount={amount}&currency=SEK");
 
             var response = await _restClient.GetAsync<string>(url, HttpStatusCode.OK, _authorizationToken.Token, cancellationToken: cancellationToken);
 
@@ -309,7 +312,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             CheckInitialized();
             Authorize();
 
-            var url = string.Concat(_checkoutGateWayApiUrl, "/v1/checkouts/widget");
+            var url = string.Concat(CheckoutGateWayApiUrl, "/v1/checkouts/widget");
 
             var response = _restClient.Post<CreateProductWidgetRequest, string>(url, System.Net.HttpStatusCode.Created, request, _authorizationToken.Token);
 
@@ -331,7 +334,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             CheckInitialized();
             await AuthorizeAsync();
 
-            var url = string.Concat(_checkoutGateWayApiUrl, "/v1/checkouts/widget");
+            var url = string.Concat(CheckoutGateWayApiUrl, "/v1/checkouts/widget");
 
             var response = await _restClient.PostAsync<CreateProductWidgetRequest, string>(url, System.Net.HttpStatusCode.Created, request, _authorizationToken.Token, "Bearer", cancellationToken);
 
@@ -351,7 +354,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             CheckInitialized();
             Authorize();
 
-            var url = string.Concat(_checkoutGateWayApiUrl, "/v2/checkouts");
+            var url = string.Concat(CheckoutGateWayApiUrl, "/v2/checkouts");
 
             var response = _restClient.Post<CreateCheckoutRequest, string>(url, System.Net.HttpStatusCode.Created, request, _authorizationToken.Token);
             
@@ -369,7 +372,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             CheckInitialized();
             await AuthorizeAsync();
 
-            var url = string.Concat(_checkoutGateWayApiUrl, "/v2/checkouts");
+            var url = string.Concat(CheckoutGateWayApiUrl, "/v2/checkouts");
 
             var response = await _restClient.PostAsync<CreateCheckoutRequest, string>(url, System.Net.HttpStatusCode.Created, request, _authorizationToken.Token, "Bearer", cancellationToken);
 
@@ -386,7 +389,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             CheckInitialized();
             Authorize();
 
-            var url = string.Concat(_checkoutGateWayApiUrl, "/v1/orders/", orderId);
+            var url = string.Concat(CheckoutGateWayApiUrl, "/v1/orders/", orderId);
             var response = _restClient.Get<GetOrderResponse>(url, System.Net.HttpStatusCode.OK, _authorizationToken.Token);
 
             return response.Result;
@@ -403,7 +406,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             CheckInitialized();
             await AuthorizeAsync();
 
-            var url = string.Concat(_checkoutGateWayApiUrl, "/v1/orders/", orderId);
+            var url = string.Concat(CheckoutGateWayApiUrl, "/v1/orders/", orderId);
             var response = await _restClient.GetAsync<GetOrderResponse>(url, System.Net.HttpStatusCode.OK, _authorizationToken.Token, "Bearer", cancellationToken);
 
             return response.Result;
@@ -419,7 +422,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             CheckInitialized();
             Authorize();
 
-            var url = string.Concat(_checkoutGateWayApiUrl, $"/v1/orders/{orderId}/status");
+            var url = string.Concat(CheckoutGateWayApiUrl, $"/v1/orders/{orderId}/status");
             var response = _restClient.Get<GetOrderStatusResponse>(url, System.Net.HttpStatusCode.OK, _authorizationToken.Token);
 
             return response.Result;
@@ -436,7 +439,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             CheckInitialized();
             await AuthorizeAsync();
 
-            var url = string.Concat(_checkoutGateWayApiUrl, "/v1/orders/{orderId}/status", orderId);
+            var url = string.Concat(CheckoutGateWayApiUrl, "/v1/orders/{orderId}/status", orderId);
             var response =await _restClient.GetAsync<GetOrderStatusResponse>(url, System.Net.HttpStatusCode.OK, _authorizationToken.Token, "Bearer", cancellationToken);
 
             return response.Result;
@@ -452,7 +455,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             CheckInitialized();
             Authorize();
 
-            var url = string.Concat(_checkoutGateWayApiUrl, $"/v1/orders/{request.OrderId}/status/{request.Status.Status}");
+            var url = string.Concat(CheckoutGateWayApiUrl, $"/v1/orders/{request.OrderId}/status/{request.Status.Status}");
 
             var response = _restClient.Put<UpdateOrderStatusRequest, UpdateOrderStatusResponse>(url, System.Net.HttpStatusCode.OK, null, _authorizationToken.Token);
 
@@ -470,7 +473,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             CheckInitialized();
             await AuthorizeAsync();
 
-            var url = string.Concat(_checkoutGateWayApiUrl, $"/v1/orders/{request.OrderId}/status/{request.Status.Status}");
+            var url = string.Concat(CheckoutGateWayApiUrl, $"/v1/orders/{request.OrderId}/status/{request.Status.Status}");
 
             var response = await _restClient.PutAsync<CreateCheckoutRequest, string>(url, System.Net.HttpStatusCode.OK, null, _authorizationToken.Token, "Bearer", cancellationToken);
 
@@ -488,7 +491,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             CheckInitialized();
             Authorize();
 
-            var url = string.Concat(_checkoutGateWayApiUrl, $"/v1/orders/{orderId}/order-references");
+            var url = string.Concat(CheckoutGateWayApiUrl, $"/v1/orders/{orderId}/order-references");
 
             var response = _restClient.Post<AddOrderReferenceRequest, AddOrderReferenceResponse>(url, System.Net.HttpStatusCode.OK, request, _authorizationToken.Token);
 
@@ -507,7 +510,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             CheckInitialized();
             await AuthorizeAsync();
 
-            var url = string.Concat(_checkoutGateWayApiUrl, $"/v1/orders/{orderId}/order-references");
+            var url = string.Concat(CheckoutGateWayApiUrl, $"/v1/orders/{orderId}/order-references");
 
             var response = await _restClient.PostAsync<AddOrderReferenceRequest, AddOrderReferenceResponse>(url, System.Net.HttpStatusCode.OK, request, _authorizationToken.Token, "Bearer", cancellationToken);
 
