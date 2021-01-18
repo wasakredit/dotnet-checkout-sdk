@@ -6,6 +6,7 @@ using WasaKredit.Client.Dotnet.Sdk.Contracts.Responses;
 
 namespace WasaKredit.Client.Dotnet.Sdk
 {
+    //TODO Add missing things like, ship, cancel, createinvoicecheckout, fix response objects... 
     public interface IWasaKreditClient
     {
         [Obsolete("CalculateLeasingCost is deprecated, use CalculateMonthlyCost instead.")]
@@ -56,9 +57,6 @@ namespace WasaKredit.Client.Dotnet.Sdk
 
         Task<GetOrderStatusResponse> GetOrderStatusAsync(string orderId, CancellationToken cancellationToken = default(CancellationToken));
 
-        UpdateOrderStatusResponse UpdateOrderStatus(UpdateOrderStatusRequest request);
-
-        Task<UpdateOrderStatusResponse> UpdateOrderStatusAsync(UpdateOrderStatusRequest request, CancellationToken cancellationToken = default(CancellationToken));
 
         AddOrderReferenceResponse AddOrderReference(string orderId, AddOrderReferenceRequest request);
 
