@@ -7,29 +7,12 @@ using WasaKredit.Client.Dotnet.Sdk.Contracts.Responses;
 namespace WasaKredit.Client.Dotnet.Sdk
 {
     //TODO Add missing things like, ship, cancel, createinvoicecheckout, fix response objects... 
-    public interface IWasaKreditClient
-    {
-        [Obsolete("CalculateLeasingCost is deprecated, use CalculateMonthlyCost instead.")]
-        CalculateLeasingCostResponse CalculateLeasingCost(CalculateLeasingCostRequest request);
-
-        [Obsolete("CalculateLeasingCostAsync is deprecated, use CalculateMonthlyCostAsync instead.")]
-        Task<CalculateLeasingCostResponse> CalculateLeasingCostAsync(CalculateLeasingCostRequest request, CancellationToken cancellationToken = default(CancellationToken));
+    public interface IWasaKreditClient{
 
         CalculateMonthlyCostResponse CalculateMonthlyCost(CalculateMonthlyCostRequest request);
 
         Task<CalculateMonthlyCostResponse> CalculateMonthlyCostAsync(CalculateMonthlyCostRequest request, CancellationToken cancellationToken = default(CancellationToken));
 
-        [Obsolete("CalculateTotalLeasingCost is deprecated, do not use.")]
-        CalculateTotalLeasingCostResponse CalculateTotalLeasingCost(CalculateTotalLeasingCostRequest request);
-
-        [Obsolete("CalculateTotalLeasingCostAsync is deprecated, do not use.")]
-        Task<CalculateTotalLeasingCostResponse> CalculateTotalLeasingCostAsync(CalculateTotalLeasingCostRequest request, CancellationToken cancellationToken = default(CancellationToken));
-
-        [Obsolete("ValidateLeasingAmount is deprecated, use ValidateFinancedAmount instead.")]
-        ValidateLeasingAmountResponse ValidateLeasingAmount(string amount);
-
-        [Obsolete("ValidateLeasingAmountAsync is deprecated, use ValidateFinancedAmountAsync instead.")]
-        Task<ValidateLeasingAmountResponse> ValidateLeasingAmountAsync(string amount, CancellationToken cancellationToken = default(CancellationToken));
 
         ValidateFinancedAmountResponse ValidateFinancedAmount(string amount);
 
@@ -39,14 +22,15 @@ namespace WasaKredit.Client.Dotnet.Sdk
 
         Task<GetMonthlyCostWidgetResponse> GetMonthlyCostWidgetAsync(string amount, CancellationToken cancellationToken = default(CancellationToken));
 
-        [Obsolete("CreateProductWidget is obsolete, use GetMonthlyCostWidget instead")]
-        CreateProductWidgetResponse CreateProductWidget(CreateProductWidgetRequest request);
+        CreateCheckoutResponse CreateLeasingCheckout(CreateCheckoutRequest request);
+        Task<CreateCheckoutResponse> CreateLeasingCheckoutAsync(CreateCheckoutRequest request, CancellationToken cancellationToken = default(CancellationToken));
+        CreateInvoiceCheckoutResponse CreateInvoiceCheckout(CreateInvoiceCheckoutRequest request);
+        Task<CreateInvoiceCheckoutResponse> CreateInvoiceCheckoutAsync(CreateInvoiceCheckoutRequest request, CancellationToken cancellationToken = default(CancellationToken));
 
-        [Obsolete("CreateProductWidgetAsync is obsolete, use GetMonthlyCostWidgetAsync instead")]
-        Task<CreateProductWidgetResponse> CreateProductWidgetAsync(CreateProductWidgetRequest request, CancellationToken cancellationToken = default(CancellationToken));
-
+        [Obsolete] //use CreateLeasingCheckout
         CreateCheckoutResponse CreateCheckout(CreateCheckoutRequest request);
-
+        
+        [Obsolete] //use CreateLeasingCheckout
         Task<CreateCheckoutResponse> CreateCheckoutAsync(CreateCheckoutRequest request, CancellationToken cancellationToken = default(CancellationToken));
 
         GetOrderResponse GetOrder(string orderId);
@@ -57,6 +41,10 @@ namespace WasaKredit.Client.Dotnet.Sdk
 
         Task<GetOrderStatusResponse> GetOrderStatusAsync(string orderId, CancellationToken cancellationToken = default(CancellationToken));
 
+        ShipOrderResponse ShipOrder(ShipOrderRequest request);
+        Task<ShipOrderResponse> ShipOrderAsync(ShipOrderRequest request,CancellationToken cancellationToken = default(CancellationToken));
+        CancelOrderResponse CancelOrder(CancelOrderRequest request);
+        Task<CancelOrderResponse> CancelOrderAsync(CancelOrderRequest request, CancellationToken cancellationToken = default(CancellationToken));
 
         AddOrderReferenceResponse AddOrderReference(string orderId, AddOrderReferenceRequest request);
 

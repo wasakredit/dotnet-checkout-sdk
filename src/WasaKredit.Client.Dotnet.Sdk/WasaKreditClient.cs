@@ -266,8 +266,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
             return new CreateCheckoutResponse { HtmlSnippet = response.ResultString };
         }
 
-        public async Task<CreateCheckoutResponse> CreateLeasingCheckoutAsync(CreateCheckoutRequest request,
-            CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<CreateCheckoutResponse> CreateLeasingCheckoutAsync(CreateCheckoutRequest request, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await CreateCheckoutAsync(request, cancellationToken);
         }
@@ -295,14 +294,14 @@ namespace WasaKredit.Client.Dotnet.Sdk
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<CreateInvoiceCheckoutResponse> CreateInvoiceCheckoutAsync(CreateInvoiceCheckoutRequest request)
+        public async Task<CreateInvoiceCheckoutResponse> CreateInvoiceCheckoutAsync(CreateInvoiceCheckoutRequest request, CancellationToken cancellationToken = default(CancellationToken))
         {
 
             await AuthorizeAsync();
 
             var url = string.Concat(CheckoutGateWayApiUrl, "/v4/invoice/checkouts");
 
-            var response = await _restClient.PostAsync<CreateInvoiceCheckoutRequest, string>(url, System.Net.HttpStatusCode.Created, request, _authorizationToken.Token);
+            var response = await _restClient.PostAsync<CreateInvoiceCheckoutRequest, string>(url, System.Net.HttpStatusCode.Created, request, _authorizationToken.Token,"Bearer", cancellationToken);
 
             return new CreateInvoiceCheckoutResponse { HtmlSnippet = response.ResultString };
         }
@@ -397,14 +396,14 @@ namespace WasaKredit.Client.Dotnet.Sdk
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<ShipOrderResponse> ShipOrderAsync(ShipOrderRequest request)
+        public async Task<ShipOrderResponse> ShipOrderAsync(ShipOrderRequest request, CancellationToken cancellationToken = default(CancellationToken))
         {
 
             await AuthorizeAsync();
 
             var url = string.Concat(CheckoutGateWayApiUrl, $"/v4/orders/{request.OrderId}/ship");
 
-            var response = await _restClient.PostAsync<ShipOrderRequest, ShipOrderResponse>(url, System.Net.HttpStatusCode.OK, null, _authorizationToken.Token);
+            var response = await _restClient.PostAsync<ShipOrderRequest, ShipOrderResponse>(url, System.Net.HttpStatusCode.OK, null, _authorizationToken.Token, "Bearer", cancellationToken);
 
             return response.Result;
         }
@@ -433,14 +432,14 @@ namespace WasaKredit.Client.Dotnet.Sdk
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<CancelOrderResponse> CancelOrderAsync(CancelOrderRequest request)
+        public async Task<CancelOrderResponse> CancelOrderAsync(CancelOrderRequest request, CancellationToken cancellationToken = default(CancellationToken))
         {
 
             await AuthorizeAsync();
 
             var url = string.Concat(CheckoutGateWayApiUrl, $"/v4/orders/{request.OrderId}/cancel");
 
-            var response = await _restClient.PostAsync<CancelOrderRequest, CancelOrderResponse>(url, System.Net.HttpStatusCode.OK, null, _authorizationToken.Token);
+            var response = await _restClient.PostAsync<CancelOrderRequest, CancelOrderResponse>(url, System.Net.HttpStatusCode.OK, null, _authorizationToken.Token, "Bearer", cancellationToken);
 
             return response.Result;
         }

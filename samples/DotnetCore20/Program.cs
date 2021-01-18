@@ -25,7 +25,8 @@ namespace DotnetCore31
             CreateCheckoutExample();
             GetOrderExample();
             GetOrderStatusExample();
-            UpdateOrderStatusExample();
+//            UpdateOrderStatusExample();
+//TODO Replace with ship- and cancel order
             AddOrderReferenceExample();
 
             MultiplePartnersExample();
@@ -190,27 +191,27 @@ namespace DotnetCore31
             }
         }
 
-        public static void UpdateOrderStatusExample()
-        {
-            var client = WasaKreditClient.Instance;
-            client.Initialize(_authenticationClient, true);
+        //public static void UpdateOrderStatusExample()
+        //{
+        //    var client = WasaKreditClient.Instance;
+        //    client.Initialize(_authenticationClient, true);
 
-            try
-            {
-                var request = RequestMockFactory.UpdateOrderStatusRequest();
-                var response = client.UpdateOrderStatus(request);
-                Console.WriteLine($"The status for order {request.OrderId} has been set to {response.Status}.");
-                Console.ReadLine();
-            }
-            catch (WasaKreditApiException ex)
-            {
-                PrintException(ex);
-            }
-            catch (WasaKreditAuthenticationException ex)
-            {
-                PrintException(ex);
-            }
-        }
+        //    try
+        //    {
+        //        var request = RequestMockFactory.UpdateOrderStatusRequest();
+        //        var response = client.UpdateOrderStatus(request);
+        //        Console.WriteLine($"The status for order {request.OrderId} has been set to {response.Status}.");
+        //        Console.ReadLine();
+        //    }
+        //    catch (WasaKreditApiException ex)
+        //    {
+        //        PrintException(ex);
+        //    }
+        //    catch (WasaKreditAuthenticationException ex)
+        //    {
+        //        PrintException(ex);
+        //    }
+        //}
 
         private static void AddOrderReferenceExample()
         {

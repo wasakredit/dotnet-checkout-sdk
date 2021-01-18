@@ -45,7 +45,6 @@ namespace SamplesHelperClasses
             return new CreateCheckoutRequest
             {
                 PaymentTypes = "leasing",
-                OrderReferenceId = "a1be9394-182d-49c7-a470-ea59e68ce3ef",
                 OrderReferences = new List<OrderReference>
                 {
                     new OrderReference {Key = "QuoteReference", Value = "a40261e0-7c25-496a-a2ac-c7b93adb81bf"}
@@ -92,14 +91,6 @@ namespace SamplesHelperClasses
             };
         }
 
-        public static UpdateOrderStatusRequest UpdateOrderStatusRequest()
-        {
-            return new UpdateOrderStatusRequest
-            {
-                OrderId = "1257d019-9ba7-4a25-90a4-21788854bc56",
-                Status = new OrderStatus { Status = "shipped" }
-            };
-        }
 
         public static AddOrderReferenceRequest AddOrderReferenceRequest()
         {
