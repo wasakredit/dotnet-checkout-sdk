@@ -18,6 +18,10 @@ namespace WasaKredit.Client.Dotnet.Sdk
 
         Task<ValidateFinancedAmountResponse> ValidateFinancedAmountAsync(string amount, CancellationToken cancellationToken = default(CancellationToken));
 
+        Task<ValidateInvoiceFinancedAmountResponse> ValidateInvoiceFinancedAmountAsync(string amount,
+            CancellationToken cancellationToken = default(CancellationToken));
+
+        ValidateInvoiceFinancedAmountResponse ValidateInvoiceFinancedAmount(string amount);
         GetMonthlyCostWidgetResponse GetMonthlyCostWidget(string amount);
 
         Task<GetMonthlyCostWidgetResponse> GetMonthlyCostWidgetAsync(string amount, CancellationToken cancellationToken = default(CancellationToken));
@@ -49,5 +53,9 @@ namespace WasaKredit.Client.Dotnet.Sdk
         AddOrderReferenceResponse AddOrderReference(string orderId, AddOrderReferenceRequest request);
 
         Task<AddOrderReferenceResponse> AddOrderReferenceAsync(string orderId, AddOrderReferenceRequest request, CancellationToken cancellationToken = default(CancellationToken));
+        GetPaymentOptionsResponse GetLeasingPaymentOptions(string totalAmount);
+
+        Task<GetPaymentOptionsResponse> GetLeasingPaymentOptionsAsync(string totalAmount,
+            CancellationToken cancellationToken = default(CancellationToken));
     }
 }

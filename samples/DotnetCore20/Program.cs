@@ -21,7 +21,9 @@ namespace DotnetCore31
 
             CalculateMonthlyCostExample();
             GetPaymentMethodsExample();
+            GetLeasingPaymentOptionsExample();
             ValidateFinancedAmountExample();
+            ValidateInvoiceFinancedAmountExample();
             CreateMonthlyCostWidgetExample();
             CreateLeasingCheckoutExample();
             CreateInvoiceCheckoutExample();
@@ -30,7 +32,7 @@ namespace DotnetCore31
             ShipOrderExample();
             CancelOrderExample();
             AddOrderReferenceExample();
-
+            CancelOrderExample();
             MultiplePartnersExample();
         }
 
@@ -104,6 +106,29 @@ namespace DotnetCore31
             }
         }
 
+        private static void GetLeasingPaymentOptionsExample()
+        {
+            var client = WasaKreditClient.Instance;
+            client.Initialize(_authenticationClient, true);
+
+            try
+            {
+                var response = client.GetLeasingPaymentOptions("20000");
+                var firstPaymentOption = response.ContractLengths.First();
+
+                Console.WriteLine($"Payment method is \"Leasing\" with a default contract length of {firstPaymentOption.ContractLength} months.");
+                Console.ReadLine();
+            }
+            catch (WasaKreditApiException ex)
+            {
+                PrintException(ex);
+            }
+            catch (WasaKreditAuthenticationException ex)
+            {
+                PrintException(ex);
+            }
+        }
+
         public static void ValidateFinancedAmountExample()
         {
             var client = WasaKreditClient.Instance;
@@ -113,6 +138,29 @@ namespace DotnetCore31
             {
                 string amount = "10000.00";
                 var response = client.ValidateFinancedAmount(amount);
+
+                Console.WriteLine($"Validation result for the amount {amount} SEK is {response.ValidationResult}.");
+                Console.ReadLine();
+            }
+            catch (WasaKreditApiException ex)
+            {
+                PrintException(ex);
+            }
+            catch (WasaKreditAuthenticationException ex)
+            {
+                PrintException(ex);
+            }
+        }
+
+        public static void ValidateInvoiceFinancedAmountExample()
+        {
+            var client = WasaKreditClient.Instance;
+            client.Initialize(_authenticationClient, true);
+
+            try
+            {
+                string amount = "10000.00";
+                var response = client.ValidateInvoiceFinancedAmount(amount);
 
                 Console.WriteLine($"Validation result for the amount {amount} SEK is {response.ValidationResult}.");
                 Console.ReadLine();

@@ -121,7 +121,34 @@ namespace WasaKredit.Client.Dotnet.Sdk
             return response.Result;
         }
 
-     
+
+
+
+        /// <summary>
+        /// Gets the available leasing payment options for the desired amount
+        /// </summary>
+        /// <param name="totalAmount"></param>
+        /// <returns></returns>
+        public GetPaymentOptionsResponse GetLeasingPaymentOptions(string totalAmount)
+        {
+            Authorize();
+            var url = $"{CheckoutGateWayApiUrl}/v4/leasing/payment-options?total_amount={totalAmount}";
+            var response = _restClient.Get<GetPaymentOptionsResponse>(url, System.Net.HttpStatusCode.OK, _authorizationToken.Token);
+            return response.Result;
+        }
+
+        /// <summary>
+        ///Asynchronously Gets the available leasing payment options for the desired amount
+        /// </summary>
+        /// <param name="totalAmount"></param>
+        /// <returns></returns>
+        public async Task<GetPaymentOptionsResponse> GetLeasingPaymentOptionsAsync(string totalAmount, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await AuthorizeAsync();
+            var url = $"{CheckoutGateWayApiUrl}/v4/leasing/payment-options?total_amount={totalAmount}";
+            var response = await _restClient.GetAsync<GetPaymentOptionsResponse>(url, System.Net.HttpStatusCode.OK, _authorizationToken.Token, "Bearer",cancellationToken);
+            return response.Result;
+        }
 
         /// <summary>
         /// Validates whether a leasing amount is within the min/max financing amount limits for you as a Wasa Kredit partner using  Leasing as payment method.
@@ -181,14 +208,14 @@ namespace WasaKredit.Client.Dotnet.Sdk
         /// </summary>
         /// <param name="amount"></param>
         /// <returns></returns>
-        public async Task<ValidateInvoiceFinancedAmountResponse> ValidateInvoiceFinancedAmountAsync(string amount)
+        public async Task<ValidateInvoiceFinancedAmountResponse> ValidateInvoiceFinancedAmountAsync(string amount, CancellationToken cancellationToken = default(CancellationToken))
         {
 
             Authorize();
 
             var url = string.Concat(CheckoutGateWayApiUrl, "/v4/invoice/validate-financed-amount/?amount=", amount);
 
-            var response = await _restClient.GetAsync<ValidateInvoiceFinancedAmountResponse>(url, System.Net.HttpStatusCode.OK, _authorizationToken.Token, "Bearer");
+            var response = await _restClient.GetAsync<ValidateInvoiceFinancedAmountResponse>(url, System.Net.HttpStatusCode.OK, _authorizationToken.Token, "Bearer", cancellationToken);
 
             return response.Result;
         }
