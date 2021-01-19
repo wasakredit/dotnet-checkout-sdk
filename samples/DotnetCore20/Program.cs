@@ -4,6 +4,7 @@ using System.Linq;
 using SamplesHelperClasses;
 using WasaKredit.Client.Dotnet.Sdk;
 using WasaKredit.Client.Dotnet.Sdk.Authentication;
+using WasaKredit.Client.Dotnet.Sdk.Contracts.Requests;
 using WasaKredit.Client.Dotnet.Sdk.Exceptions;
 
 namespace DotnetCore31
@@ -22,14 +23,39 @@ namespace DotnetCore31
             GetPaymentMethodsExample();
             ValidateFinancedAmountExample();
             CreateMonthlyCostWidgetExample();
-            CreateCheckoutExample();
+            CreateLeasingCheckoutExample();
+            CreateInvoiceCheckoutExample();
             GetOrderExample();
             GetOrderStatusExample();
-//            UpdateOrderStatusExample();
-//TODO Replace with ship- and cancel order
+            ShipOrderExample();
+            CancelOrderExample();
             AddOrderReferenceExample();
 
             MultiplePartnersExample();
+        }
+
+        public static void CreateInvoiceCheckoutExample(WasaKreditClient client = null)
+        {
+            if (client == null)
+            {
+                client = WasaKreditClient.Instance;
+                client.Initialize(_authenticationClient, true);
+            }
+
+            try
+            {
+                var response = client.CreateInvoiceCheckout(RequestMockFactory.CreateInvoiceCheckout());
+                Console.WriteLine($"Checkout html snippet:\n{response.HtmlSnippet}");
+                Console.ReadLine();
+            }
+            catch (WasaKreditApiException ex)
+            {
+                PrintException(ex);
+            }
+            catch (WasaKreditAuthenticationException ex)
+            {
+                PrintException(ex);
+            }
         }
 
         private static void CalculateMonthlyCostExample()
@@ -122,7 +148,7 @@ namespace DotnetCore31
             }
         }
 
-        public static void CreateCheckoutExample(WasaKreditClient client = null)
+        public static void CreateLeasingCheckoutExample(WasaKreditClient client = null)
         {
             if (client == null)
             {
@@ -132,7 +158,7 @@ namespace DotnetCore31
 
             try
             {
-                var response = client.CreateCheckout(RequestMockFactory.CreateCheckoutRequest());
+                var response = client.CreateLeasingCheckout(RequestMockFactory.CreateCheckoutRequest());
                 Console.WriteLine($"Checkout html snippet:\n{response.HtmlSnippet}");
                 Console.ReadLine();
             }
@@ -191,27 +217,55 @@ namespace DotnetCore31
             }
         }
 
-        //public static void UpdateOrderStatusExample()
-        //{
-        //    var client = WasaKreditClient.Instance;
-        //    client.Initialize(_authenticationClient, true);
+        public static void ShipOrderExample()
+        {
+            var client = WasaKreditClient.Instance;
+            client.Initialize(_authenticationClient, true);
 
-        //    try
-        //    {
-        //        var request = RequestMockFactory.UpdateOrderStatusRequest();
-        //        var response = client.UpdateOrderStatus(request);
-        //        Console.WriteLine($"The status for order {request.OrderId} has been set to {response.Status}.");
-        //        Console.ReadLine();
-        //    }
-        //    catch (WasaKreditApiException ex)
-        //    {
-        //        PrintException(ex);
-        //    }
-        //    catch (WasaKreditAuthenticationException ex)
-        //    {
-        //        PrintException(ex);
-        //    }
-        //}
+            try
+            {
+                var request = new ShipOrderRequest()
+                {
+                    OrderId = Guid.NewGuid()
+                };
+                client.ShipOrder(request);
+                Console.WriteLine($"The status for order {request.OrderId} has been set to shipped.");
+                Console.ReadLine();
+            }
+            catch (WasaKreditApiException ex)
+            {
+                PrintException(ex);
+            }
+            catch (WasaKreditAuthenticationException ex)
+            {
+                PrintException(ex);
+            }
+        }
+
+        public static void CancelOrderExample()
+        {
+            var client = WasaKreditClient.Instance;
+            client.Initialize(_authenticationClient, true);
+
+            try
+            {
+                var request = new CancelOrderRequest()
+                {
+                    OrderId = Guid.NewGuid()
+                };
+                client.CancelOrder(request);
+                Console.WriteLine($"The status for order {request.OrderId} has been set to canceled.");
+                Console.ReadLine();
+            }
+            catch (WasaKreditApiException ex)
+            {
+                PrintException(ex);
+            }
+            catch (WasaKreditAuthenticationException ex)
+            {
+                PrintException(ex);
+            }
+        }
 
         private static void AddOrderReferenceExample()
         {
@@ -245,12 +299,12 @@ namespace DotnetCore31
         {
             var wasaKreditClients = SetupMultiplePartners();
 
-            CreateCheckoutExample(wasaKreditClients["PartnerOneId"]);
-            CreateCheckoutExample(wasaKreditClients["PartnerTwoId"]);
+            CreateLeasingCheckoutExample(wasaKreditClients["PartnerOneId"]);
+            CreateLeasingCheckoutExample(wasaKreditClients["PartnerTwoId"]);
 
             //reuse access tokens 
-            CreateCheckoutExample(wasaKreditClients["PartnerOneId"]);
-            CreateCheckoutExample(wasaKreditClients["PartnerTwoId"]);
+            CreateLeasingCheckoutExample(wasaKreditClients["PartnerOneId"]);
+            CreateLeasingCheckoutExample(wasaKreditClients["PartnerTwoId"]);
         }
 
         private static Dictionary<string, WasaKreditClient> SetupMultiplePartners()

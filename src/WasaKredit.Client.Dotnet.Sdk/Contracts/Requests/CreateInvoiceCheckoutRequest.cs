@@ -8,9 +8,9 @@ namespace WasaKredit.Client.Dotnet.Sdk.Contracts.Requests
     {
         public IEnumerable<OrderReference> OrderReferences { get; set; }
         public IEnumerable<InvoiceCartItem> CartItems { get; set; }
-        public CurrencyAmount TotalPriceInclVat { get; set; }
-        public CurrencyAmount TotalPriceExVat { get; set; }
-        public CurrencyAmount TotalVat { get; set; }
+        public Price TotalPriceInclVat { get; set; }
+        public Price TotalPriceExVat { get; set; }
+        public Price TotalVat { get; set; }
         public string CustomerOrganizationNumber { get; set; }
         public string PurchaserName { get; set; }
         public string PurchaserEmail { get; set; }

@@ -19,26 +19,7 @@ namespace SamplesHelperClasses
             };
         }
 
-        public static CalculateTotalLeasingCostRequest CalculateTotalLeasingCostRequest()
-        {
-            return new CalculateTotalLeasingCostRequest
-            {
-                TotalAmount = new Price { Amount = "11500.50", Currency = "SEK" }
-            };
-        }
-
-        public static CreateProductWidgetRequest CreateProductWidgetRequest()
-        {
-            return new CreateProductWidgetRequest
-            {
-                FinancialProduct = "Leasing",
-                PriceExVat = new Price
-                {
-                    Amount = "1299.50",
-                    Currency = "SEK"
-                }
-            };
-        }
+      
 
         public static CreateCheckoutRequest CreateCheckoutRequest()
         {
@@ -91,6 +72,53 @@ namespace SamplesHelperClasses
             };
         }
 
+
+        public static CreateInvoiceCheckoutRequest CreateInvoiceCheckout()
+        {
+            return new CreateInvoiceCheckoutRequest
+            {
+                OrderReferences = new List<OrderReference>
+                {
+                    new OrderReference {Key = "QuoteReference", Value = "a40261e0-7c25-496a-a2ac-c7b93adb81bf"}
+                },
+                CartItems =
+                    new List<InvoiceCartItem>
+                    {
+                        new InvoiceCartItem
+                        {
+                            ProductId = "ez",
+                            ProductName = "Kylskåp EZ3",
+                            PriceExVat = new Price() {Amount = "14995.10", Currency = "SEK"},
+                            VatAmount = new Price {Amount = "3748.75", Currency = "SEK"},
+                            Quantity = 2,
+                            VatPercentage = "25",
+                            PriceInclVat = new Price{ Amount = "20000.85", Currency = "SEK"},
+                            TotalPriceExVat = new Price{Amount = "300000",Currency = "SEK"},
+                            TotalPriceInclVat = new Price{Amount = "300000",Currency = "SEK"},
+                            TotalVat = new Price{Amount = "300000",Currency = "SEK"}
+                        }
+                    },
+                CustomerOrganizationNumber = "7904174757",
+                PurchaserName = "Anders Svensson",
+                PurchaserEmail = "purchaser@gmail.com",
+                PurchaserPhone = "070-1234567",
+                TotalPriceExVat = new Price { Amount = "300000", Currency = "SEK" },
+                TotalPriceInclVat = new Price { Amount = "300000", Currency = "SEK" },
+                TotalVat = new Price { Amount = "300000", Currency = "SEK" },
+                BillingDetails = new BillingDetails
+                {
+                    BillingReference = "ekonomiavdelningen",
+                    BillingTag = "Ekonomi avdelningen"
+                },
+                ConfirmationCallbackUrl = "http://myeshop.com/landhere",
+                PartnerReference = "Karl säljare",
+                PingUrl = "http://myeshop.com/pinghere",
+
+                RecipientName = "Anders Svensson",
+                RecipientPhone = "070-1234567",
+                RequestDomain = "http://myeshop"
+            };
+        }
 
         public static AddOrderReferenceRequest AddOrderReferenceRequest()
         {

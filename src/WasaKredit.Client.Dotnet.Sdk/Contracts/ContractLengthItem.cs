@@ -4,6 +4,6 @@
     {
         public int ContractLength { get; set; }
 
-        public CurrencyAmount MonthlyCost { get; set; }
+        public Price MonthlyCost { get; set; }
     }
 }
