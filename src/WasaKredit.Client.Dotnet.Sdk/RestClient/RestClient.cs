@@ -165,7 +165,6 @@ namespace WasaKredit.Client.Dotnet.Sdk.RestClient
             var requestMessage = new HttpRequestMessage(method, uri);
 
             AddAuthorizationHeader(requestMessage, authorizationToken, authorizationMethod);
-            AddTestModeHeader(requestMessage);
 
             var responseMessage = await _client.SendAsync(requestMessage).ConfigureAwait(false);
 
@@ -187,7 +186,6 @@ namespace WasaKredit.Client.Dotnet.Sdk.RestClient
             var requestMessage = new HttpRequestMessage(method, uri);
 
             AddAuthorizationHeader(requestMessage, authorizationToken, authorizationMethod);
-            AddTestModeHeader(requestMessage);
 
             var responseMessage = await _client.SendAsync(requestMessage, cancellationToken);
             
@@ -212,7 +210,6 @@ namespace WasaKredit.Client.Dotnet.Sdk.RestClient
             };
 
             AddAuthorizationHeader(requestMessage, authorizationToken, authorizationMethod);
-            AddTestModeHeader(requestMessage);
 
             var response = await _client.SendAsync(requestMessage).ConfigureAwait(false);
 
@@ -237,8 +234,7 @@ namespace WasaKredit.Client.Dotnet.Sdk.RestClient
             };
 
             AddAuthorizationHeader(requestMessage, authorizationToken, authorizationMethod);
-            AddTestModeHeader(requestMessage);
-
+   
             var response = await _client.SendAsync(requestMessage, cancellationToken);
             
             if (response.StatusCode == HttpStatusCode.RequestTimeout)
@@ -261,8 +257,7 @@ namespace WasaKredit.Client.Dotnet.Sdk.RestClient
                 Content = new FormUrlEncodedContent(formUrlEncodedContent)
             };
 
-            AddTestModeHeader(requestMessage);
-
+     
             var response = await _client.SendAsync(requestMessage).ConfigureAwait(false);
 
             if (response.StatusCode == HttpStatusCode.RequestTimeout)
@@ -285,8 +280,7 @@ namespace WasaKredit.Client.Dotnet.Sdk.RestClient
                 Content = new FormUrlEncodedContent(formUrlEncodedContent)
             };
 
-            AddTestModeHeader(requestMessage);
-
+  
             var response = await _client.SendAsync(requestMessage, cancellationToken);
             
             if (response.StatusCode == HttpStatusCode.RequestTimeout)
@@ -403,11 +397,7 @@ namespace WasaKredit.Client.Dotnet.Sdk.RestClient
             }
         }
 
-        private void AddTestModeHeader(HttpRequestMessage request)
-        {
-            request.Headers.Add("x-test-mode", _testMode.ToString());
-        }
-
+       
         private WasaKreditApiException CreateWasaKreditApiException<TResponse>(WasaKreditResponse<TResponse> response)
         {
             WasaKreditError error = new WasaKreditError
