@@ -309,7 +309,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
 
             Authorize();
 
-            var url = string.Concat(CheckoutGateWayApiUrl, "/v4/invoice/checkouts");
+            var url = string.Concat(CheckoutGateWayApiUrl, "/v4/invoice/checkout");
 
             var response = _restClient.Post<CreateInvoiceCheckoutRequest, string>(url, System.Net.HttpStatusCode.Created, request, _authorizationToken.Token);
 
@@ -326,7 +326,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
 
             await AuthorizeAsync();
 
-            var url = string.Concat(CheckoutGateWayApiUrl, "/v4/invoice/checkouts");
+            var url = string.Concat(CheckoutGateWayApiUrl, "/v4/invoice/checkout");
 
             var response = await _restClient.PostAsync<CreateInvoiceCheckoutRequest, string>(url, System.Net.HttpStatusCode.Created, request, _authorizationToken.Token,"Bearer", cancellationToken);
 

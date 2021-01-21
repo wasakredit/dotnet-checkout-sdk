@@ -6,7 +6,6 @@ using WasaKredit.Client.Dotnet.Sdk.Contracts.Responses;
 
 namespace WasaKredit.Client.Dotnet.Sdk
 {
-    //TODO Add missing things like, ship, cancel, createinvoicecheckout, fix response objects... 
     public interface IWasaKreditClient{
 
         CalculateMonthlyCostResponse CalculateMonthlyCost(CalculateMonthlyCostRequest request);
