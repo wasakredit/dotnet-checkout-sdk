@@ -132,7 +132,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
         public GetPaymentOptionsResponse GetLeasingPaymentOptions(string totalAmount)
         {
             Authorize();
-            var url = $"{CheckoutGateWayApiUrl}/v4/leasing/payment-options?total_amount={totalAmount}";
+            var url = $"{CheckoutGateWayApiUrl}/v4/leasing/payment-options?amount={totalAmount}";
             var response = _restClient.Get<GetPaymentOptionsResponse>(url, System.Net.HttpStatusCode.OK, _authorizationToken.Token);
             return response.Result;
         }
@@ -145,7 +145,7 @@ namespace WasaKredit.Client.Dotnet.Sdk
         public async Task<GetPaymentOptionsResponse> GetLeasingPaymentOptionsAsync(string totalAmount, CancellationToken cancellationToken = default(CancellationToken))
         {
             await AuthorizeAsync();
-            var url = $"{CheckoutGateWayApiUrl}/v4/leasing/payment-options?total_amount={totalAmount}";
+            var url = $"{CheckoutGateWayApiUrl}/v4/leasing/payment-options?amount={totalAmount}";
             var response = await _restClient.GetAsync<GetPaymentOptionsResponse>(url, System.Net.HttpStatusCode.OK, _authorizationToken.Token, "Bearer",cancellationToken);
             return response.Result;
         }
