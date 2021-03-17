@@ -309,12 +309,12 @@ GetMonthlyCostWidgetResponse GetMonthlyCostWidget(string amount)
 var response = client.GetMonthlyCostWidget("10000");
 ```
 
-### <a name="create_checkout">CreateCheckout</a>
+### <a name="create_checkout">CreateLeasingCheckout</a>
 
 The Checkout is the most central object in the Wasa Kredit B2B Checkout product. The checkout is supposed to be inserted as a payment method in your e-commerce checkout. This method creates a checkout instance and provides the checkout as a html snippet that is supposed to be embedded in your checkout view.
 
 ```c#
-CreateCheckoutResponse CreateCheckout(CreateCheckoutRequest request)
+CreateCheckoutResponse CreateLeasingCheckout(CreateCheckoutRequest request)
 ```
 
 #### Parameters
@@ -437,7 +437,7 @@ var request = new CreateCheckoutRequest
     PingUrl = "https://YOUR-BASE-DOMAIN/payment-callback/"
 };
 
-var response = client.CreateCheckout(request);
+var response = client.CreateLeasingCheckout(request);
 ```
 
 Note that the `OrderReferences` property is a collection. Even if you don't want to create an order in your system at before creating a Wasa Kredit checkout, you have the possibility to supply a temporary identifier to be able to match the Wasa Kredit order with some reference in your system. You also have the option to add additional reference identifiers at a later time, for example when your final order is created
@@ -446,6 +446,86 @@ The URL that you supply through the `PingUrl` property should be an endpoint tha
 
 You will receive an html snippet which you should embed in your web page, inside of which the Wasa Kredit Checkout widget will handle the payment flow.
 
+### <a name="create_checkout">CreateInvoiceCheckout</a>
+
+The Checkout is the most central object in the Wasa Kredit B2B Checkout product. The checkout is supposed to be inserted as a payment method in your e-commerce checkout. This method creates a checkout instance and provides the checkout as a html snippet that is supposed to be embedded in your checkout view.
+
+```c#
+CreateCheckoutResponse CreateInvoiceCheckout(CreateCheckoutRequest request)
+```
+
+#### Parameters
+
+##### CreateCheckoutRequest
+
+| Name | Type | Description |
+|---|---|---|
+| OrderReferences | *List[**OrderReference**]* | A list containing order reference objects. |
+| CartItem | *List[**InvoiceCartItem**]* (required) | A list of the items in the cart as InvoiceCartItem objects. |
+| TotalPriceInclVat  | *Price* (required) |Price object containing the price of the checkout including VAT. |
+| TotalPriceExVat   | *Price* (required)| Price object containing the price of the checkout excluding VAT. |
+| TotalVat | *Price* (required) | Price object containing the price of for the ckecout VAT. |
+| CustomerOrganizationNumber | *string* | Customer organization number. |
+| PurchaserName | *string* | Name of the purchaser. |
+| PurchaserEmail | *string* | E-mail of the purchaser. |
+| PurchaserPhone | *string* | Phone number of the purchaser. |
+| PartnerReference  | *string* | Partner reference. |
+| BillingAddress | *Address* | Address object containing the billing address. |
+| RecipientName | *string* | Name of the recipient. |
+| RecipientPhone | *string* | Phone number of the recipient. |
+| RequestDomain | *string* (required) | The domain of the partner, used to allow CORS. |
+| ConfirmationCallbackUrl | *string* | Url to the partner's confirmation page. |
+| PingUrl | *string* | Receiver url for order status change pingback notifications. |
+
+##### OrderReference
+
+| Name | Type | Description |
+|---|---|---|
+| Key | *string* (required) | A key to describe the reference. *Ex: "temp_order_reference"*. |
+| Value | *string* (required) | The actual order reference value. |
+
+##### Cart Item
+
+| Name | Type | Description |
+|---|---|---|
+| ProductId | *string* (required) | The product identifier. |
+| ProductName | *string* (required) | Name of the product. |
+| PriceExVat | *Price* (required) | Price object containing the price for one product excluding VAT. |
+| PriceInclVat  | *Price* (required) | Price object containing the price for one product including VAT. |
+| VatAmount | *Price* (required) | Price object containing the VAT of one product. |
+| TotalPriceInclVat   | *Price* (required) | Price object containing the total price of the products including VAT. |
+| TotalPriceExVat    | *Price* (required) | Price object containing the total price of the products excluding VAT. |
+| TotalVat | *Price* (required) | Price object containing the total VAT. |
+| Quantity | *int* (required) | Quantity of the product. |
+| VatPercentage | *string* (required) | VAT percentage as a parsable string, e.g. '25' is 25%.  |
+
+
+##### Price
+
+| Name | Type | Description |
+|---|---|---|
+| Amount | *string* (required) | A string value that will be parsed to a decimal, e.g. 199 is '199.00'. |
+| Currency | *string* (required) | The currency represented as a ISO 4217 currency code. *At present, only SEK is handled*. |
+
+##### Address
+
+| Name | Type | Description |
+|---|---|---|
+| CompanyName | *string* | Company name |
+| StreetAddress | *string* | Street address |
+| PostalCode | *string* | Postal code |
+| City | *string* | City |
+| Country | *string* | Country |
+
+#### Response
+
+##### CreateCheckoutResponse
+
+| Name | Type | Description |
+|---|---|---|
+| HtmlSnippet | *string* | The checkout snippet for embedding. |
+
+#### Example usage
 ### <a name="initialize_checkout">Initialize checkout</a>
 
 After creating a Wasa Kredit Checkout by calling the `CreateCheckout` method and embedding the resulting html snippet in your web page, as described above, the checkout html snippet needs to be explicitly initialized through a javascript call to the global `window.wasaCheckout.init()` function. The `init` method call will populate the \<div\> contained in the html snippet and link it to an internal iframe.
@@ -614,53 +694,72 @@ string orderId = "891f4314-8ecc-4923-9f85-03dabf52df88";
 var response = client.GetOrderStatus(orderId);
 ```
 
-### <a name="update_order_status">UpdateOrderStatus</a>
+### <a name="ship_order">Ship order</a>
 
-Changes the status of the Wasa Kredit order. This method should be used to update the Wasa Kredit order status if you have shipped or canceled the order. Thus it is only possible to set the status to "canceled" or "shipped". The status can only be set to "canceled" if it has not already been shipped or completed and to "shipped" if its current status is "ready_to_ship."
+This method should be used to update the Wasa Kredit order if you have shipped the order. Order can only be "shipped" if its current status is "ready_to_ship."
 
 ```c#
-UpdateOrderStatusResponse UpdateOrderStatus(UpdateOrderStatusRequest request)
+ShipOrderResponse ShipOrder(ShipOrderRequest request)
 ```
 
 #### Parameters
 
-##### UpdateOrderStatusRequest
+##### ShipOrderRequest
 
 | Name | Type | Description |
 |---|---|---|
 | OrderId | *string* (required) | The order identifier. |
-| Status | *OrderStatus* (required) | An order status object containing the new status. |
-
-##### OrderStatus
-
-| Name | Type | Description |
-|---|---|---|
-| Status | *string* | The order status. |
 
 #### Response
 
-##### UpdateOrderStatusResponse
+##### ShipOrderResponse
 
 | Name | Type | Description |
 |---|---|---|
-| Status | *OrderStatus* | An order status object containing the new status. |
-
-##### OrderStatus
-
-| Name | Type | Description |
-|---|---|---|
-| Status | *string* | The order status. |
 
 #### Example usage
 
 ```c#
-var request = new UpdateOrderStatusRequest
+var request = new ShipOrderRequest
 {
     OrderId = "1257d019-9ba7-4a25-90a4-21788854bc56",
-    Status = new OrderStatus {Status = "shipped"}
 };
 
-var response = client.UpdateOrderStatus(request);
+var response = client.ShipOrder(request);
+```
+
+### <a name="cancel_order">Cancel order</a>
+
+This method should be used to update the Wasa Kredit order if you have canceled the order. Order can only be "canceled" if its current status is not "shipped".
+
+```c#
+CancelOrderResponse CancelOrder(CancelOrderRequest request)
+```
+
+#### Parameters
+
+##### CancelOrderRequest
+
+| Name | Type | Description |
+|---|---|---|
+| OrderId | *string* (required) | The order identifier. |
+
+#### Response
+
+##### CancelOrderResponse
+
+| Name | Type | Description |
+|---|---|---|
+
+#### Example usage
+
+```c#
+var request = new CancelOrderRequest
+{
+    OrderId = "1257d019-9ba7-4a25-90a4-21788854bc56",
+};
+
+var response = client.CancelOrder(request);
 ```
 
 ### <a name="add_order_reference">AddOrderReference</a>
