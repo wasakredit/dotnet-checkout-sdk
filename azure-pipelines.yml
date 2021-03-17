@@ -23,4 +23,10 @@ steps:
     packagesToPack: 'src/WasaKredit.Client.Dotnet.Sdk/WasaKredit.Client.Dotnet.Sdk.csproj'
     nobuild: true
     versioningScheme: 'off'
+    
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
 
