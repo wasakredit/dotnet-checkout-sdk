@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using WasaKredit.Client.Dotnet.Sdk.Exceptions;
 using WasaKredit.Client.Dotnet.Sdk.RestClient;
+using static WasaKredit.Client.Dotnet.Sdk.Settings;
 
 namespace WasaKredit.Client.Dotnet.Sdk.Authentication
 {
@@ -15,7 +16,10 @@ namespace WasaKredit.Client.Dotnet.Sdk.Authentication
         private static IRestClient _restClient;
         private string _clientId;
         private string _clientSecret;
-        private static readonly string _authenticationUrl = "https://b2b.services.wasakredit.se/auth/connect/token";
+
+        private bool _testMode = false;
+
+        private string AuthenticationUrl => _testMode ? TEST_AUTHENTICATION_URL : AUTHENTICATION_URL;
 
         private AccessToken _accessToken;
 
@@ -26,6 +30,12 @@ namespace WasaKredit.Client.Dotnet.Sdk.Authentication
         {
             get { return _instance ?? (_instance = new AuthenticationClient()); }
         }
+
+        public void SetTestMode(bool isTestMode)
+        {
+            _testMode = isTestMode;
+        }
+
 
         public AuthenticationClient() {}
 
@@ -67,7 +77,7 @@ namespace WasaKredit.Client.Dotnet.Sdk.Authentication
 
             var authorizationContent = CreateAuthenticationContent();
 
-            var response = await _restClient.PostUrlEncodedAsync<AuthenticationResponse>(_authenticationUrl, System.Net.HttpStatusCode.OK, authorizationContent);
+            var response = await _restClient.PostUrlEncodedAsync<AuthenticationResponse>(AuthenticationUrl, System.Net.HttpStatusCode.OK, authorizationContent);
 
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
             {
@@ -90,7 +100,7 @@ namespace WasaKredit.Client.Dotnet.Sdk.Authentication
 
             var authorizationContent = CreateAuthenticationContent();
 
-            var response = _restClient.PostUrlEncoded<AuthenticationResponse>(_authenticationUrl, System.Net.HttpStatusCode.OK, authorizationContent);
+            var response = _restClient.PostUrlEncoded<AuthenticationResponse>(AuthenticationUrl, System.Net.HttpStatusCode.OK, authorizationContent);
             
             SetAccessToken(response.Result);
 
@@ -133,5 +143,6 @@ namespace WasaKredit.Client.Dotnet.Sdk.Authentication
                 throw new WasaKreditClientException("No client credentials has been set for the authentication client.");
             }
         }
+
     }
 }

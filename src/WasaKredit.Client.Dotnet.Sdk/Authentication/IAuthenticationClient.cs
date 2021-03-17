@@ -7,5 +7,7 @@ namespace WasaKredit.Client.Dotnet.Sdk.Authentication
         Task<AccessToken> GetAccessTokenAsync();
 
         AccessToken GetAccessToken();
+
+        void SetTestMode(bool isTestMode);
     }
 }

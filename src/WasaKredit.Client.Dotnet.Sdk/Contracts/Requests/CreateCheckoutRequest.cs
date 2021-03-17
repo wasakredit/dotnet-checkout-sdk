@@ -6,7 +6,6 @@ namespace WasaKredit.Client.Dotnet.Sdk.Contracts.Requests
     {
         public string PaymentTypes { get; set; }
 
-        public string OrderReferenceId { get; set; }
         public IEnumerable<OrderReference> OrderReferences { get; set; }
 
         public IEnumerable<CartItem> CartItems { get; set; }
