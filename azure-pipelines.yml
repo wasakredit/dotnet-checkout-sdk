@@ -16,6 +16,7 @@ steps:
     projects: 'src/WasaKredit.Client.Dotnet.Sdk/WasaKredit.Client.Dotnet.Sdk.csproj'
 
 - task: DotNetCoreCLI@2
+  displayName: "Run tests"
   inputs:
     command: 'test'
     projects: '**/*.csproj'
