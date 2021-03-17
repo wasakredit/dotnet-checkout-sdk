@@ -1,0 +1,55 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+# the build will trigger on any changes to the master branch
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+
+steps:
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet build'
+  inputs:
+    command: 'build'
+    arguments: '--configuration $(buildConfiguration)'
+    projects: 'src/WasaKredit.Client.Dotnet.Sdk/WasaKredit.Client.Dotnet.Sdk.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: "dotnet pack"
+  inputs:
+    command: 'pack'
+    arguments: '--configuration $(buildConfiguration)'
+    packagesToPack: 'src/WasaKredit.Client.Dotnet.Sdk/WasaKredit.Client.Dotnet.Sdk.csproj'
+    nobuild: true
+    versioningScheme: 'off'
+
+- task: NuGetAuthenticate@0
+  inputs:
+    nuGetServiceConnections: 'Nuget org'
+
+- task: NuGetCommand@2
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    nuGetFeedType: 'external'
+    publishFeedCredentials: 'Nuget org'
+
+# - task: NuGetCommand@2
+#   displayName: 'nuget push'
+#   inputs:
+#     command: 'push'
+#     # feedsToUse: 'select'
+#     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+#     # nuGetFeedType: 'internal'
+#     includeNuGetOrg: true
+#     # publishVstsFeed: 'TestFeed'
+#     versioningScheme: 'off'
+#     allowPackageConflicts: true
