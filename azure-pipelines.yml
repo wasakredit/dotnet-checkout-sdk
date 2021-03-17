@@ -16,6 +16,11 @@ steps:
     projects: 'src/WasaKredit.Client.Dotnet.Sdk/WasaKredit.Client.Dotnet.Sdk.csproj'
 
 - task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: '**/*.csproj'
+
+- task: DotNetCoreCLI@2
   displayName: "dotnet pack"
   inputs:
     command: 'pack'
